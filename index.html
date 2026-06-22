@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA World Cup 2026 – Macy Predictor Challenge</title>
+<title>FIFA World Cup 2026 – AmSty Predictor Challenge</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -532,7 +532,7 @@ hr.dv{border:none;border-top:2px solid var(--border);margin:20px 0}
     <div class="we-are">We Are 26</div>
     <div class="hero-h1">FIFA <em>World</em><br>Cup 2026</div>
     <div class="hero-h2">Predictor Challenge</div>
-    <div class="amst-tag">Macy Predictor Challenge</div>
+    <div class="amst-tag">AmSty Predictor Challenge</div>
     <div class="hero-meta">
       <span>June 11–July 19</span>
       <span>48 Teams</span>
@@ -624,7 +624,7 @@ hr.dv{border:none;border-top:2px solid var(--border);margin:20px 0}
   <hr class="dv">
 
   <div class="stitle">🥉 Step 2 — Top 8 Third-Place Teams</div>
-  <p class="sdesc">Pick 8 of the 11 eligible third-place teams (Group D is a fixed bracket slot and cannot finish 3rd). Rank your picks 1–8 — this feeds the FIFA 495-permutation bracket formula.</p>
+  <p class="sdesc">Pick 8 of the 12 third-place teams. Rank your picks 1–8 — this feeds the FIFA 495-permutation bracket formula.</p>
   <div class="t3panel">
     <div id="valmsg" class="valmsg">⚠ Select exactly 8 teams ranked 1–8, no duplicates.</div>
     <div class="t3grid" id="t3grid"></div>
@@ -716,7 +716,7 @@ hr.dv{border:none;border-top:2px solid var(--border);margin:20px 0}
 
 <!-- ADMIN -->
 <div id="pg-admin" class="pg">
-  <div class="awarn">🔒 <strong>Admin Only</strong> — Enter password: <strong>Macychallenge</strong>. Submissions populate in real time. Scores update automatically every 30 min via live API.</div>
+  <div class="awarn">🔒 <strong>Admin Only</strong> — Enter password: <strong>Robschallenge</strong>. Submissions populate in real time. Scores update automatically every 30 min via live API.</div>
   <div style="display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:7px;padding:10px 14px;margin-bottom:8px;font-family:Barlow Condensed,sans-serif;font-size:12px;letter-spacing:1px">
     <span id="fbDot" style="width:10px;height:10px;border-radius:50%;background:#ccc;flex-shrink:0"></span>
     <span id="fbMsg" style="color:var(--muted)">Checking Firebase...</span>
@@ -727,42 +727,67 @@ hr.dv{border:none;border-top:2px solid var(--border);margin:20px 0}
     <button id="autoRefreshBtn" onclick="doAutoScore()" style="background:var(--gold);color:var(--black);border:none;border-radius:4px;padding:4px 10px;font-family:Barlow Condensed,sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;cursor:pointer;text-transform:uppercase">Refresh Now</button>
   </div>
   <div class="stitle">📥 Add / Edit Submissions</div>
-  <p class="sdesc">Manually enter participant picks below. All fields marked with a group letter are for ranking (1st–4th). Champion pick is required for scoring.</p>
+  <p class="sdesc">Fill out picks on behalf of a participant exactly as they would have. All fields work the same as the main picks page.</p>
 
   <div style="background:var(--card);border:2px solid var(--gold);border-radius:8px;padding:18px;margin-bottom:18px">
-    <div style="font-family:Barlow Condensed,sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px">➕ Add / Update Participant</div>
 
     <!-- Name -->
-    <div class="resfield" style="margin-bottom:10px;max-width:360px">
-      <label>Participant Name (required)</label>
-      <input type="text" id="meName" placeholder="e.g. John Smith" style="font-size:14px">
+    <div class="namebar" style="margin-bottom:16px">
+      <label>Participant Name</label>
+      <input class="name-input" id="meName" type="text" placeholder="Enter participant name...">
     </div>
 
-    <!-- Champion -->
-    <div class="resfield" style="margin-bottom:14px;max-width:360px">
-      <label>🏆 Champion Pick (required)</label>
-      <input type="text" id="meChamp" placeholder="e.g. Brazil" style="font-size:14px">
+    <!-- STEP 1: Groups (reuse same UI) -->
+    <div class="stitle" style="font-size:20px">📋 Step 1 — Group Rankings</div>
+    <p class="sdesc">Rank each team 1st–4th in all 12 groups.</p>
+    <div class="ggrid" id="meGroupsGrid"></div>
+
+    <hr class="dv">
+
+    <!-- STEP 2: 3rd place -->
+    <div class="stitle" style="font-size:20px">🥉 Step 2 — Top 8 Third-Place Teams</div>
+    <p class="sdesc">Pick 8 of the 12 third-place teams and rank them 1–8.</p>
+    <div class="t3panel">
+      <div id="meValmsg" class="valmsg">⚠ Select exactly 8 teams ranked 1–8, no duplicates.</div>
+      <div class="t3grid" id="me3rdGrid"></div>
     </div>
 
-    <!-- Group Rankings -->
-    <div style="font-family:Barlow Condensed,sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Group Stage Rankings — 1st &amp; 2nd place per group</div>
-    <div id="meGroupsGrid"></div>
+    <hr class="dv">
 
-    <!-- 3rd Place -->
-    <div style="font-family:Barlow Condensed,sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:12px 0 8px">3rd Place Qualifiers — Enter group letters of top 8 (e.g. A, B, C...)</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:14px" id="me3rdGrid"></div>
-
-    <!-- Bracket picks summary -->
-    <div style="font-family:Barlow Condensed,sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Knockout Picks (optional — enter team names)</div>
-    <div class="resgrid" id="meKnockoutGrid"></div>
-
-    <div class="brow" style="margin-top:14px">
-      <button class="btn bgld" onclick="manualAddSub()">💾 Save Submission</button>
-      <button class="btn bout bsm" onclick="clearManualForm()">✕ Clear Form</button>
+    <!-- STEP 3: Bracket -->
+    <div class="stitle" style="font-size:20px">🗂 Step 3 — Bracket</div>
+    <p class="sdesc">Complete Steps 1 &amp; 2 first, then click teams to advance them through each round.</p>
+    <div class="bwrap">
+      <div class="bnote" id="meBktNote">⚽ Complete Steps 1 &amp; 2 above to unlock the bracket</div>
+      <div id="meBktContent" style="display:none">
+        <div class="r32lbl">ROUND OF 32</div>
+        <div class="r32grid" id="meR32Grid"></div>
+        <div class="rounds-row">
+          <div><div class="rcol-title" style="color:var(--usa-blue);border-color:var(--usa-blue)">Round of 16</div><div id="meR16Grid"></div></div>
+          <div><div class="rcol-title" style="color:var(--mex-green);border-color:var(--mex-green)">Quarterfinals</div><div id="meQFGrid"></div></div>
+          <div><div class="rcol-title" style="color:var(--can-red);border-color:var(--can-red)">Semifinals</div><div id="meSFGrid"></div></div>
+          <div>
+            <div class="rcol-title" style="color:var(--bronze);border-color:var(--bronze)">🥉 3rd Place</div>
+            <div id="me3rdGame"></div>
+            <div class="rcol-title" style="margin-top:10px">🏆 Final</div>
+            <div id="meFinalGrid"></div>
+            <div class="champ-display" id="meChampShow"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="meMsg" style="display:none;margin-top:10px;font-family:Barlow Condensed,sans-serif;font-size:12px;letter-spacing:1px"></div>
+
+    <!-- Save button -->
+    <div class="brow" style="margin-top:16px;justify-content:center">
+      <button class="btn bgld" style="font-size:14px;padding:12px 32px" onclick="manualSaveSub()">💾 Save Submission</button>
+      <button class="btn bout" onclick="clearManualForm()">✕ Clear Form</button>
+    </div>
+    <div id="meMsg" style="display:none;margin-top:10px;font-family:Barlow Condensed,sans-serif;font-size:13px;letter-spacing:1px;text-align:center"></div>
   </div>
 
+  <div class="brow" style="margin-bottom:18px">
+    <button class="btn bout bsm" onclick="clearSubs()">🗑 Clear All Submissions</button>
+  </div>
   <div class="brow" style="margin-bottom:18px">
     <button class="btn bout bsm" onclick="clearSubs()">🗑 Clear All Submissions</button>
   </div>
@@ -808,14 +833,14 @@ hr.dv{border:none;border-top:2px solid var(--border);margin:20px 0}
   </div>
   <div class="brow">
     <button class="btn bgld" onclick="calcScores()">🔢 Calculate Scores</button>
-    <button class="btn bblk" onclick="saveRes()">💾 Save Results</button>
+    <button class="btn bblk" onclick="saveRes();calcScores();">💾 Save Results</button>
   </div>
 </div>
 
 <!-- LEADERBOARD -->
 <div id="pg-lb" class="pg">
   <div class="stitle">🏆 Leaderboard</div>
-  <p class="sdesc">Scores update automatically every 30 minutes as matches finish. No manual input needed.</p>
+  <p class="sdesc">Standings update after the admin enters results and clicks Calculate Scores.</p>
   <div id="podwrap" style="display:none"><div class="podium" id="podium"></div><hr class="dv"></div>
   <div id="lbempty" style="text-align:center;padding:44px;color:var(--muted);font-family:Barlow Condensed,sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase">⚽ No submissions yet — go make your picks!</div>
   <div class="lbcard" id="lbcard" style="display:none"></div>
@@ -866,17 +891,17 @@ hr.dv{border:none;border-top:2px solid var(--border);margin:20px 0}
 
 <script>
 // =====================================================
-// FIREBASE CONFIG — Macy Predictor Challenge
-// Replace with YOUR Macy Firebase project config
-// console.firebase.google.com → Project Settings → Your apps
+// FIREBASE — replace the values below with YOUR project config
+// Get them from: console.firebase.google.com
+//   Project Settings → Your apps → Web app → Config snippet
 // =====================================================
 var FIREBASE_CONFIG = {
-  apiKey:            "AIzaSyDdOuBoIALjlRXigqIlkEhNX9fHQbxlNiw",
-  authDomain:        "wc2026-macy.firebaseapp.com",
-  projectId:         "wc2026-macy",
-  storageBucket:     "wc2026-macy.firebasestorage.app",
-  messagingSenderId: "310987545397",
-  appId:             "1:310987545397:web:d33075aab90a6cf1578a7c"
+  apiKey:            "AIzaSyBmmox3_xbbqqQ2LVK0RARTY7li56mQ-sA",
+  authDomain:        "wc2026-amsty.firebaseapp.com",
+  projectId:         "wc2026-amsty",
+  storageBucket:     "wc2026-amsty.firebasestorage.app",
+  messagingSenderId: "142752290798",
+  appId:             "1:142752290798:web:f4633b376715d2382b20ff"
 };
 var db = null;
 var subsListener = null;
@@ -915,515 +940,519 @@ function updateFbStatus(ok, msg) {
 }
 
 function startRealtimeListener() {
-  if(!db) return;
+  if(!db){
+    // Firebase not ready yet - retry shortly
+    setTimeout(startRealtimeListener, 500);
+    return;
+  }
   if(subsListener) { subsListener(); subsListener=null; }
-  subsListener = db.collection("wc2026_macy_submissions")
+  subsListener = db.collection("wc2026_amst_submissions")
     .onSnapshot(function(snapshot){
       SUBS=[];
       snapshot.forEach(function(doc){ SUBS.push(doc.data()); });
       SUBS.sort(function(a,b){return (b.score||0)-(a.score||0);});
-      try{ localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS)); }catch(e){}
+      try{ localStorage.setItem('wc26subs',JSON.stringify(SUBS)); }catch(e){}
       renderSubs();
       renderLB();
     }, function(err){ console.warn("Listener error:",err); });
 }
 
 const FIFA_PERMS={
-"ABCEFGH":"HGBCAFDE",
+"ABCDEFGH":"CEBFAGDH",
+"ABCDEFGI":"CEBFAGDI",
+"ABCDEFGJ":"CEBFAGDJ",
+"ABCDEFGK":"CEBFAGDK",
+"ABCDEFGL":"CFBDAGLE",
+"ABCDEFHI":"CEBAHFDI",
+"ABCDEFHJ":"CEBAHFDJ",
+"ABCDEFHK":"CEBAHFDK",
+"ABCDEFHL":"CEBDAFLH",
+"ABCDEFIJ":"CEBAIFDJ",
+"ABCDEFIK":"CEBAIFDK",
+"ABCDEFIL":"CEBDAFLI",
+"ABCDEFJK":"CEBAJFDK",
+"ABCDEFJL":"CEBDAFLJ",
+"ABCDEFKL":"CEBDAFLK",
+"ABCDEGHI":"CEBAHGDI",
+"ABCDEGHJ":"CEBAHGDJ",
+"ABCDEGHK":"CEBAHGDK",
+"ABCDEGHL":"CEBDAGLH",
+"ABCDEGIJ":"CEBAIGDJ",
+"ABCDEGIK":"CEBAIGDK",
+"ABCDEGIL":"CEBDAGLI",
+"ABCDEGJK":"CEBAJGDK",
+"ABCDEGJL":"CEBDAGLJ",
+"ABCDEGKL":"CEBDAGLK",
+"ABCDEHIJ":"CEBAHDIJ",
+"ABCDEHIK":"CEBAHDIK",
+"ABCDEHIL":"CEBAHDLI",
+"ABCDEHJK":"CEBAHDJK",
+"ABCDEHJL":"CEBAHDLJ",
+"ABCDEHKL":"CEBAHDLK",
+"ABCDEIJK":"CEBAIDJK",
+"ABCDEIJL":"CEBAIDLJ",
+"ABCDEIKL":"CEBAIDLK",
+"ABCDEJKL":"CEBAJDLK",
+"ABCDFGHI":"CFBAHGDI",
+"ABCDFGHJ":"CFBAHGDJ",
+"ABCDFGHK":"CFBAHGDK",
+"ABCDFGHL":"CFBDAGLH",
+"ABCDFGIJ":"CFBAIGDJ",
+"ABCDFGIK":"CFBAIGDK",
+"ABCDFGIL":"CFBDAGLI",
+"ABCDFGJK":"CFBAJGDK",
+"ABCDFGJL":"CFBDAGLJ",
+"ABCDFGKL":"CFBDAGLK",
+"ABCDFHIJ":"CFBAHDIJ",
+"ABCDFHIK":"CFBAHDIK",
+"ABCDFHIL":"CFBAHDLI",
+"ABCDFHJK":"CFBAHDJK",
+"ABCDFHJL":"CFBAHDLJ",
+"ABCDFHKL":"CFBAHDLK",
+"ABCDFIJK":"CFBAIDJK",
+"ABCDFIJL":"CFBAIDLJ",
+"ABCDFIKL":"CFBAIDLK",
+"ABCDFJKL":"CFBAJDLK",
+"ABCDGHIJ":"CGBAHDIJ",
+"ABCDGHIK":"CGBAHDIK",
+"ABCDGHIL":"CGBAHDLI",
+"ABCDGHJK":"CGBAHDJK",
+"ABCDGHJL":"CGBAHDLJ",
+"ABCDGHKL":"CGBAHDLK",
+"ABCDGIJK":"CGBAIDJK",
+"ABCDGIJL":"CGBAIDLJ",
+"ABCDGIKL":"CGBAIDLK",
+"ABCDGJKL":"CGBAJDLK",
+"ABCDHIJK":"CIBAHDJK",
+"ABCDHIJL":"CIBAHDLJ",
+"ABCDHIKL":"CIBAHDLK",
+"ABCDHJKL":"CJBAHDLK",
+"ABCDIJKL":"CIBAJDLK",
 "ABCEFGHI":"HGBCAFEI",
 "ABCEFGHJ":"HGBCAFEJ",
 "ABCEFGHK":"HGBCAFEK",
 "ABCEFGHL":"HGBCAFLE",
-"ABCEFGI":"CGBDAFEI",
 "ABCEFGIJ":"EGBCAFIJ",
 "ABCEFGIK":"EGBCAFIK",
 "ABCEFGIL":"EGBCAFLI",
-"ABCEFGJ":"CGBDAFEJ",
 "ABCEFGJK":"EGBCAFJK",
 "ABCEFGJL":"EGBCAFLJ",
-"ABCEFGK":"CGBDAFEK",
 "ABCEFGKL":"EGBCAFLK",
-"ABCEFGL":"CGBDAFLE",
-"ABCEFHI":"HEBCAFDI",
 "ABCEFHIJ":"HJBCAFEI",
 "ABCEFHIK":"HEBCAFIK",
 "ABCEFHIL":"HEBCAFLI",
-"ABCEFHJ":"HJBCAFDE",
 "ABCEFHJK":"HJBCAFEK",
 "ABCEFHJL":"HJBCAFLE",
-"ABCEFHK":"HEBCAFDK",
 "ABCEFHKL":"HEBCAFLK",
-"ABCEFHL":"HFBCADLE",
-"ABCEFIJ":"CJBDAFEI",
 "ABCEFIJK":"EJBCAFIK",
 "ABCEFIJL":"EJBCAFLI",
-"ABCEFIK":"CEBDAFIK",
 "ABCEFIKL":"EIBCAFLK",
-"ABCEFIL":"CEBDAFLI",
-"ABCEFJK":"CJBDAFEK",
 "ABCEFJKL":"EJBCAFLK",
-"ABCEFJL":"CJBDAFLE",
-"ABCEFKL":"CEBDAFLK",
-"ABCEGHI":"HGBCADEI",
 "ABCEGHIJ":"HJBCAGEI",
 "ABCEGHIK":"EGBCAHIK",
 "ABCEGHIL":"EGBCAHLI",
-"ABCEGHJ":"HGBCADEJ",
 "ABCEGHJK":"HJBCAGEK",
 "ABCEGHJL":"HJBCAGLE",
-"ABCEGHK":"HGBCADEK",
 "ABCEGHKL":"EGBCAHLK",
-"ABCEGHL":"HGBCADLE",
-"ABCEGIJ":"EGBCADIJ",
 "ABCEGIJK":"EJBCAGIK",
 "ABCEGIJL":"EJBCAGLI",
-"ABCEGIK":"EGBCADIK",
 "ABCEGIKL":"EGBAICLK",
-"ABCEGIL":"EGBCADLI",
-"ABCEGJK":"EGBCADJK",
 "ABCEGJKL":"EJBCAGLK",
-"ABCEGJL":"EGBCADLJ",
-"ABCEGKL":"EGBCADLK",
-"ABCEHIJ":"HJBCADEI",
 "ABCEHIJK":"EJBCAHIK",
 "ABCEHIJL":"EJBCAHLI",
-"ABCEHIK":"HEBCADIK",
 "ABCEHIKL":"EIBCAHLK",
-"ABCEHIL":"HEBCADLI",
-"ABCEHJK":"HJBCADEK",
 "ABCEHJKL":"EJBCAHLK",
-"ABCEHJL":"HJBCADLE",
-"ABCEHKL":"HEBCADLK",
-"ABCEIJK":"EJBCADIK",
 "ABCEIJKL":"EJBAICLK",
-"ABCEIJL":"EJBCADLI",
-"ABCEIKL":"EIBCADLK",
-"ABCEJKL":"EJBCADLK",
-"ABCFGHI":"HGBCAFDI",
 "ABCFGHIJ":"HGBCAFIJ",
 "ABCFGHIK":"HGBCAFIK",
 "ABCFGHIL":"HGBCAFLI",
-"ABCFGHJ":"HGBCAFDJ",
 "ABCFGHJK":"HGBCAFJK",
 "ABCFGHJL":"HGBCAFLJ",
-"ABCFGHK":"HGBCAFDK",
 "ABCFGHKL":"HGBCAFLK",
-"ABCFGHL":"CGBDAFLH",
-"ABCFGIJ":"CGBDAFIJ",
 "ABCFGIJK":"CJBFAGIK",
 "ABCFGIJL":"CJBFAGLI",
-"ABCFGIK":"CGBDAFIK",
 "ABCFGIKL":"IGBCAFLK",
-"ABCFGIL":"CGBDAFLI",
-"ABCFGJK":"CGBDAFJK",
 "ABCFGJKL":"CJBFAGLK",
-"ABCFGJL":"CGBDAFLJ",
-"ABCFGKL":"CGBDAFLK",
-"ABCFHIJ":"HJBCAFDI",
 "ABCFHIJK":"HJBCAFIK",
 "ABCFHIJL":"HJBCAFLI",
-"ABCFHIK":"HFBCADIK",
 "ABCFHIKL":"HIBCAFLK",
-"ABCFHIL":"HFBCADLI",
-"ABCFHJK":"HJBCAFDK",
 "ABCFHJKL":"HJBCAFLK",
-"ABCFHJL":"CJBDAFLH",
-"ABCFHKL":"HFBCADLK",
-"ABCFIJK":"CJBDAFIK",
 "ABCFIJKL":"IJBCAFLK",
-"ABCFIJL":"CJBDAFLI",
-"ABCFIKL":"CIBDAFLK",
-"ABCFJKL":"CJBDAFLK",
-"ABCGHIJ":"HGBCADIJ",
 "ABCGHIJK":"HJBCAGIK",
 "ABCGHIJL":"HJBCAGLI",
-"ABCGHIK":"HGBCADIK",
 "ABCGHIKL":"IGBCAHLK",
-"ABCGHIL":"HGBCADLI",
-"ABCGHJK":"HGBCADJK",
 "ABCGHJKL":"HJBCAGLK",
-"ABCGHJL":"HGBCADLJ",
-"ABCGHKL":"HGBCADLK",
-"ABCGIJK":"CJBDAGIK",
 "ABCGIJKL":"IJBCAGLK",
-"ABCGIJL":"CJBDAGLI",
-"ABCGIKL":"IGBCADLK",
-"ABCGJKL":"CJBDAGLK",
-"ABCHIJK":"HJBCADIK",
 "ABCHIJKL":"IJBCAHLK",
-"ABCHIJL":"HJBCADLI",
-"ABCHIKL":"HIBCADLK",
-"ABCHJKL":"HJBCADLK",
-"ABCIJKL":"IJBCADLK",
-"ABEFGHI":"HGBDAFEI",
+"ABDEFGHI":"EFBAHGDI",
+"ABDEFGHJ":"EFBAHGDJ",
+"ABDEFGHK":"EFBAHGDK",
+"ABDEFGHL":"EFBDAGLH",
+"ABDEFGIJ":"EFBAIGDJ",
+"ABDEFGIK":"EFBAIGDK",
+"ABDEFGIL":"EFBDAGLI",
+"ABDEFGJK":"EFBAJGDK",
+"ABDEFGJL":"EFBDAGLJ",
+"ABDEFGKL":"EFBDAGLK",
+"ABDEFHIJ":"EFBAHDIJ",
+"ABDEFHIK":"EFBAHDIK",
+"ABDEFHIL":"EFBAHDLI",
+"ABDEFHJK":"EFBAHDJK",
+"ABDEFHJL":"EFBAHDLJ",
+"ABDEFHKL":"EFBAHDLK",
+"ABDEFIJK":"EFBAIDJK",
+"ABDEFIJL":"EFBAIDLJ",
+"ABDEFIKL":"EFBAIDLK",
+"ABDEFJKL":"EFBAJDLK",
+"ABDEGHIJ":"EGBAHDIJ",
+"ABDEGHIK":"EGBAHDIK",
+"ABDEGHIL":"EGBAHDLI",
+"ABDEGHJK":"EGBAHDJK",
+"ABDEGHJL":"EGBAHDLJ",
+"ABDEGHKL":"EGBAHDLK",
+"ABDEGIJK":"EGBAIDJK",
+"ABDEGIJL":"EGBAIDLJ",
+"ABDEGIKL":"EGBAIDLK",
+"ABDEGJKL":"EGBAJDLK",
+"ABDEHIJK":"EIBAHDJK",
+"ABDEHIJL":"EIBAHDLJ",
+"ABDEHIKL":"EIBAHDLK",
+"ABDEHJKL":"EJBAHDLK",
+"ABDEIJKL":"EIBAJDLK",
+"ABDFGHIJ":"FGBAHDIJ",
+"ABDFGHIK":"FGBAHDIK",
+"ABDFGHIL":"FGBAHDLI",
+"ABDFGHJK":"FGBAHDJK",
+"ABDFGHJL":"FGBAHDLJ",
+"ABDFGHKL":"FGBAHDLK",
+"ABDFGIJK":"FGBAIDJK",
+"ABDFGIJL":"FGBAIDLJ",
+"ABDFGIKL":"FGBAIDLK",
+"ABDFGJKL":"FGBAJDLK",
+"ABDFHIJK":"FIBAHDJK",
+"ABDFHIJL":"FIBAHDLJ",
+"ABDFHIKL":"FIBAHDLK",
+"ABDFHJKL":"FJBAHDLK",
+"ABDFIJKL":"FIBAJDLK",
+"ABDGHIJK":"HGBAIDJK",
+"ABDGHIJL":"HGBAIDLJ",
+"ABDGHIKL":"HGBAIDLK",
+"ABDGHJKL":"HGBAJDLK",
+"ABDGIJKL":"IGBAJDLK",
+"ABDHIJKL":"HIBAJDLK",
 "ABEFGHIJ":"HJBFAGEI",
 "ABEFGHIK":"EGBFAHIK",
 "ABEFGHIL":"EGBFAHLI",
-"ABEFGHJ":"HGBDAFEJ",
 "ABEFGHJK":"HJBFAGEK",
 "ABEFGHJL":"HJBFAGLE",
-"ABEFGHK":"HGBDAFEK",
 "ABEFGHKL":"EGBFAHLK",
-"ABEFGHL":"HGBDAFLE",
-"ABEFGIJ":"EGBDAFIJ",
 "ABEFGIJK":"EJBFAGIK",
 "ABEFGIJL":"EJBFAGLI",
-"ABEFGIK":"EGBDAFIK",
 "ABEFGIKL":"EGBAIFLK",
-"ABEFGIL":"EGBDAFLI",
-"ABEFGJK":"EGBDAFJK",
 "ABEFGJKL":"EJBFAGLK",
-"ABEFGJL":"EGBDAFLJ",
-"ABEFGKL":"EGBDAFLK",
-"ABEFHIJ":"HJBDAFEI",
 "ABEFHIJK":"EJBFAHIK",
 "ABEFHIJL":"EJBFAHLI",
-"ABEFHIK":"HEBDAFIK",
 "ABEFHIKL":"EIBFAHLK",
-"ABEFHIL":"HEBDAFLI",
-"ABEFHJK":"HJBDAFEK",
 "ABEFHJKL":"EJBFAHLK",
-"ABEFHJL":"HJBDAFLE",
-"ABEFHKL":"HEBDAFLK",
-"ABEFIJK":"EJBDAFIK",
 "ABEFIJKL":"EJBAIFLK",
-"ABEFIJL":"EJBDAFLI",
-"ABEFIKL":"EIBDAFLK",
-"ABEFJKL":"EJBDAFLK",
-"ABEGHIJ":"HJBDAGEI",
 "ABEGHIJK":"EJBAHGIK",
 "ABEGHIJL":"EJBAHGLI",
-"ABEGHIK":"EGBDAHIK",
 "ABEGHIKL":"EGBAIHLK",
-"ABEGHIL":"EGBDAHLI",
-"ABEGHJK":"HJBDAGEK",
 "ABEGHJKL":"EJBAHGLK",
-"ABEGHJL":"HJBDAGLE",
-"ABEGHKL":"EGBDAHLK",
-"ABEGIJK":"EJBDAGIK",
 "ABEGIJKL":"EJBAIGLK",
-"ABEGIJL":"EJBDAGLI",
-"ABEGIKL":"EGBAIDLK",
-"ABEGJKL":"EJBDAGLK",
-"ABEHIJK":"EJBDAHIK",
 "ABEHIJKL":"EJBAIHLK",
-"ABEHIJL":"EJBDAHLI",
-"ABEHIKL":"EIBDAHLK",
-"ABEHJKL":"EJBDAHLK",
-"ABEIJKL":"EJBAIDLK",
-"ABFGHIJ":"HGBDAFIJ",
 "ABFGHIJK":"HJBFAGIK",
 "ABFGHIJL":"HJBFAGLI",
-"ABFGHIK":"HGBDAFIK",
 "ABFGHIKL":"HGBAIFLK",
-"ABFGHIL":"HGBDAFLI",
-"ABFGHJK":"HGBDAFJK",
 "ABFGHJKL":"HJBFAGLK",
-"ABFGHJL":"HGBDAFLJ",
-"ABFGHKL":"HGBDAFLK",
-"ABFGIJK":"FJBDAGIK",
 "ABFGIJKL":"IJBFAGLK",
-"ABFGIJL":"FJBDAGLI",
-"ABFGIKL":"IGBDAFLK",
-"ABFGJKL":"FJBDAGLK",
-"ABFHIJK":"HJBDAFIK",
 "ABFHIJKL":"HJBAIFLK",
-"ABFHIJL":"HJBDAFLI",
-"ABFHIKL":"HIBDAFLK",
-"ABFHJKL":"HJBDAFLK",
-"ABFIJKL":"IJBDAFLK",
-"ABGHIJK":"HJBDAGIK",
 "ABGHIJKL":"HJBAIGLK",
-"ABGHIJL":"HJBDAGLI",
-"ABGHIKL":"IGBDAHLK",
-"ABGHJKL":"HJBDAGLK",
-"ABGIJKL":"IJBDAGLK",
-"ABHIJKL":"IJBDAHLK",
-"ACEFGHI":"HGECAFDI",
+"ACDEFGHI":"CEFAHGDI",
+"ACDEFGHJ":"CEFAHGDJ",
+"ACDEFGHK":"CEFAHGDK",
+"ACDEFGHL":"CEFDAGLH",
+"ACDEFGIJ":"CEFAIGDJ",
+"ACDEFGIK":"CEFAIGDK",
+"ACDEFGIL":"CEFDAGLI",
+"ACDEFGJK":"CEFAJGDK",
+"ACDEFGJL":"CEFDAGLJ",
+"ACDEFGKL":"CEFDAGLK",
+"ACDEFHIJ":"CEFAHDIJ",
+"ACDEFHIK":"CEFAHDIK",
+"ACDEFHIL":"CEFAHDLI",
+"ACDEFHJK":"CEFAHDJK",
+"ACDEFHJL":"CEFAHDLJ",
+"ACDEFHKL":"CEFAHDLK",
+"ACDEFIJK":"CEFAIDJK",
+"ACDEFIJL":"CEFAIDLJ",
+"ACDEFIKL":"CEFAIDLK",
+"ACDEFJKL":"CEFAJDLK",
+"ACDEGHIJ":"CEIAHGDJ",
+"ACDEGHIK":"CEIAHGDK",
+"ACDEGHIL":"CEIDAGLH",
+"ACDEGHJK":"CEJAHGDK",
+"ACDEGHJL":"CEJDAGLH",
+"ACDEGHKL":"CGEAHDLK",
+"ACDEGIJK":"CEIAJGDK",
+"ACDEGIJL":"CEIDAGLJ",
+"ACDEGIKL":"CEIDAGLK",
+"ACDEGJKL":"CEJDAGLK",
+"ACDEHIJK":"CEIAHDJK",
+"ACDEHIJL":"CEIAHDLJ",
+"ACDEHIKL":"CEIAHDLK",
+"ACDEHJKL":"CEJAHDLK",
+"ACDEIJKL":"CEIAJDLK",
+"ACDFGHIJ":"CFIAHGDJ",
+"ACDFGHIK":"CFIAHGDK",
+"ACDFGHIL":"CFIDAGLH",
+"ACDFGHJK":"CFJAHGDK",
+"ACDFGHJL":"CFJDAGLH",
+"ACDFGHKL":"CGFAHDLK",
+"ACDFGIJK":"CFIAJGDK",
+"ACDFGIJL":"CFIDAGLJ",
+"ACDFGIKL":"CFIDAGLK",
+"ACDFGJKL":"CFJDAGLK",
+"ACDFHIJK":"CFIAHDJK",
+"ACDFHIJL":"CFIAHDLJ",
+"ACDFHIKL":"CFIAHDLK",
+"ACDFHJKL":"CFJAHDLK",
+"ACDFIJKL":"CFIAJDLK",
+"ACDGHIJK":"CGIAHDJK",
+"ACDGHIJL":"CGIAHDLJ",
+"ACDGHIKL":"CGIAHDLK",
+"ACDGHJKL":"CGJAHDLK",
+"ACDGIJKL":"CGIAJDLK",
+"ACDHIJKL":"CIJAHDLK",
 "ACEFGHIJ":"HGJCAFEI",
 "ACEFGHIK":"HGECAFIK",
 "ACEFGHIL":"HGECAFLI",
-"ACEFGHJ":"HGJCAFDE",
 "ACEFGHJK":"HGJCAFEK",
 "ACEFGHJL":"HGJCAFLE",
-"ACEFGHK":"HGECAFDK",
 "ACEFGHKL":"HGECAFLK",
-"ACEFGHL":"HGFCADLE",
-"ACEFGIJ":"CGJDAFEI",
 "ACEFGIJK":"EGJCAFIK",
 "ACEFGIJL":"EGJCAFLI",
-"ACEFGIK":"CGEDAFIK",
 "ACEFGIKL":"EGICAFLK",
-"ACEFGIL":"CGEDAFLI",
-"ACEFGJK":"CGJDAFEK",
 "ACEFGJKL":"EGJCAFLK",
-"ACEFGJL":"CGJDAFLE",
-"ACEFGKL":"CGEDAFLK",
-"ACEFHIJ":"HJECAFDI",
 "ACEFHIJK":"HJECAFIK",
 "ACEFHIJL":"HJECAFLI",
-"ACEFHIK":"HEFCADIK",
 "ACEFHIKL":"HEICAFLK",
-"ACEFHIL":"HEFCADLI",
-"ACEFHJK":"HJECAFDK",
 "ACEFHJKL":"HJECAFLK",
-"ACEFHJL":"HJFCADLE",
-"ACEFHKL":"HEFCADLK",
-"ACEFIJK":"CJEDAFIK",
 "ACEFIJKL":"EJICAFLK",
-"ACEFIJL":"CJEDAFLI",
-"ACEFIKL":"CEIDAFLK",
-"ACEFJKL":"CJEDAFLK",
-"ACEGHIJ":"HGJCADEI",
 "ACEGHIJK":"EGJCAHIK",
 "ACEGHIJL":"EGJCAHLI",
-"ACEGHIK":"HGECADIK",
 "ACEGHIKL":"EGICAHLK",
-"ACEGHIL":"HGECADLI",
-"ACEGHJK":"HGJCADEK",
 "ACEGHJKL":"EGJCAHLK",
-"ACEGHJL":"HGJCADLE",
-"ACEGHKL":"HGECADLK",
-"ACEGIJK":"EGJCADIK",
 "ACEGIJKL":"EJICAGLK",
-"ACEGIJL":"EGJCADLI",
-"ACEGIKL":"EGICADLK",
-"ACEGJKL":"EGJCADLK",
-"ACEHIJK":"HJECADIK",
 "ACEHIJKL":"EJICAHLK",
-"ACEHIJL":"HJECADLI",
-"ACEHIKL":"HEICADLK",
-"ACEHJKL":"HJECADLK",
-"ACEIJKL":"EJICADLK",
-"ACFGHIJ":"HGJCAFDI",
 "ACFGHIJK":"HGJCAFIK",
 "ACFGHIJL":"HGJCAFLI",
-"ACFGHIK":"HGFCADIK",
 "ACFGHIKL":"HGICAFLK",
-"ACFGHIL":"HGFCADLI",
-"ACFGHJK":"HGJCAFDK",
 "ACFGHJKL":"HGJCAFLK",
-"ACFGHJL":"CGJDAFLH",
-"ACFGHKL":"HGFCADLK",
-"ACFGIJK":"CGJDAFIK",
 "ACFGIJKL":"IGJCAFLK",
-"ACFGIJL":"CGJDAFLI",
-"ACFGIKL":"CGIDAFLK",
-"ACFGJKL":"CGJDAFLK",
-"ACFHIJK":"HJFCADIK",
 "ACFHIJKL":"HJICAFLK",
-"ACFHIJL":"HJFCADLI",
-"ACFHIKL":"HFICADLK",
-"ACFHJKL":"HJFCADLK",
-"ACFIJKL":"CJIDAFLK",
-"ACGHIJK":"HGJCADIK",
 "ACGHIJKL":"HJICAGLK",
-"ACGHIJL":"HGJCADLI",
-"ACGHIKL":"HGICADLK",
-"ACGHJKL":"HGJCADLK",
-"ACGIJKL":"IGJCADLK",
-"ACHIJKL":"HJICADLK",
-"AEFGHIJ":"HGJDAFEI",
+"ADEFGHIJ":"EFIAHGDJ",
+"ADEFGHIK":"EFIAHGDK",
+"ADEFGHIL":"EFIDAGLH",
+"ADEFGHJK":"EFJAHGDK",
+"ADEFGHJL":"EFJDAGLH",
+"ADEFGHKL":"EGFAHDLK",
+"ADEFGIJK":"EFIAJGDK",
+"ADEFGIJL":"EFIDAGLJ",
+"ADEFGIKL":"EFIDAGLK",
+"ADEFGJKL":"EFJDAGLK",
+"ADEFHIJK":"EFIAHDJK",
+"ADEFHIJL":"EFIAHDLJ",
+"ADEFHIKL":"EFIAHDLK",
+"ADEFHJKL":"EFJAHDLK",
+"ADEFIJKL":"EFIAJDLK",
+"ADEGHIJK":"EGIAHDJK",
+"ADEGHIJL":"EGIAHDLJ",
+"ADEGHIKL":"EGIAHDLK",
+"ADEGHJKL":"EGJAHDLK",
+"ADEGIJKL":"EGIAJDLK",
+"ADEHIJKL":"EIJAHDLK",
+"ADFGHIJK":"FGIAHDJK",
+"ADFGHIJL":"FGIAHDLJ",
+"ADFGHIKL":"FGIAHDLK",
+"ADFGHJKL":"FGJAHDLK",
+"ADFGIJKL":"FGIAJDLK",
+"ADFHIJKL":"FIJAHDLK",
+"ADGHIJKL":"HGIAJDLK",
 "AEFGHIJK":"EGJFAHIK",
 "AEFGHIJL":"EGJFAHLI",
-"AEFGHIK":"HGEDAFIK",
 "AEFGHIKL":"EGIFAHLK",
-"AEFGHIL":"HGEDAFLI",
-"AEFGHJK":"HGJDAFEK",
 "AEFGHJKL":"EGJFAHLK",
-"AEFGHJL":"HGJDAFLE",
-"AEFGHKL":"HGEDAFLK",
-"AEFGIJK":"EGJDAFIK",
 "AEFGIJKL":"EJIFAGLK",
-"AEFGIJL":"EGJDAFLI",
-"AEFGIKL":"EGIDAFLK",
-"AEFGJKL":"EGJDAFLK",
-"AEFHIJK":"HJEDAFIK",
 "AEFHIJKL":"EJIFAHLK",
-"AEFHIJL":"HJEDAFLI",
-"AEFHIKL":"HEIDAFLK",
-"AEFHJKL":"HJEDAFLK",
-"AEFIJKL":"EJIDAFLK",
-"AEGHIJK":"EGJDAHIK",
 "AEGHIJKL":"EJIAHGLK",
-"AEGHIJL":"EGJDAHLI",
-"AEGHIKL":"EGIDAHLK",
-"AEGHJKL":"EGJDAHLK",
-"AEGIJKL":"EJIDAGLK",
-"AEHIJKL":"EJIDAHLK",
-"AFGHIJK":"HGJDAFIK",
 "AFGHIJKL":"HJIFAGLK",
-"AFGHIJL":"HGJDAFLI",
-"AFGHIKL":"HGIDAFLK",
-"AFGHJKL":"HGJDAFLK",
-"AFGIJKL":"IGJDAFLK",
-"AFHIJKL":"HJIDAFLK",
-"AGHIJKL":"HJIDAGLK",
-"BCEFGHI":"CGBDHFEI",
+"BCDEFGHI":"CEBFHGDI",
+"BCDEFGHJ":"CEBFHGDJ",
+"BCDEFGHK":"CEBFHGDK",
+"BCDEFGHL":"CFBDEGLH",
+"BCDEFGIJ":"CEBFIGDJ",
+"BCDEFGIK":"CEBFIGDK",
+"BCDEFGIL":"CFBDEGLI",
+"BCDEFGJK":"CEBFJGDK",
+"BCDEFGJL":"CFBDEGLJ",
+"BCDEFGKL":"CFBDEGLK",
+"BCDEFHIJ":"CEBDHFIJ",
+"BCDEFHIK":"CEBDHFIK",
+"BCDEFHIL":"CEBDHFLI",
+"BCDEFHJK":"CEBDHFJK",
+"BCDEFHJL":"CEBDHFLJ",
+"BCDEFHKL":"CEBDHFLK",
+"BCDEFIJK":"CEBDIFJK",
+"BCDEFIJL":"CEBDIFLJ",
+"BCDEFIKL":"CEBDIFLK",
+"BCDEFJKL":"CEBDJFLK",
+"BCDEGHIJ":"CEBDHGIJ",
+"BCDEGHIK":"CEBDHGIK",
+"BCDEGHIL":"CEBDHGLI",
+"BCDEGHJK":"CEBDHGJK",
+"BCDEGHJL":"CEBDHGLJ",
+"BCDEGHKL":"CEBDHGLK",
+"BCDEGIJK":"CEBDIGJK",
+"BCDEGIJL":"CEBDIGLJ",
+"BCDEGIKL":"CEBDIGLK",
+"BCDEGJKL":"CEBDJGLK",
+"BCDEHIJK":"CEBDIHJK",
+"BCDEHIJL":"CEBDIHLJ",
+"BCDEHIKL":"CEBDIHLK",
+"BCDEHJKL":"CEBDJHLK",
+"BCDEIJKL":"CEIBJDLK",
+"BCDFGHIJ":"CFBDHGIJ",
+"BCDFGHIK":"CFBDHGIK",
+"BCDFGHIL":"CFBDHGLI",
+"BCDFGHJK":"CFBDHGJK",
+"BCDFGHJL":"CFBDHGLJ",
+"BCDFGHKL":"CFBDHGLK",
+"BCDFGIJK":"CFBDIGJK",
+"BCDFGIJL":"CFBDIGLJ",
+"BCDFGIKL":"CFBDIGLK",
+"BCDFGJKL":"CFBDJGLK",
+"BCDFHIJK":"CFBDIHJK",
+"BCDFHIJL":"CFBDIHLJ",
+"BCDFHIKL":"CFBDIHLK",
+"BCDFHJKL":"CFBDJHLK",
+"BCDFIJKL":"CFIBJDLK",
+"BCDGHIJK":"CGBDIHJK",
+"BCDGHIJL":"CGBDIHLJ",
+"BCDGHIKL":"CGBDIHLK",
+"BCDGHJKL":"CGBDJHLK",
+"BCDGIJKL":"CGIBJDLK",
+"BCDHIJKL":"CIBDJHLK",
 "BCEFGHIJ":"HGBCJFEI",
 "BCEFGHIK":"EGBCHFIK",
 "BCEFGHIL":"EGBCHFLI",
-"BCEFGHJ":"HGBCJFDE",
 "BCEFGHJK":"HGBCJFEK",
 "BCEFGHJL":"HGBCJFLE",
-"BCEFGHK":"CGBDHFEK",
 "BCEFGHKL":"EGBCHFLK",
-"BCEFGHL":"CGBDHFLE",
-"BCEFGIJ":"CGBDJFEI",
 "BCEFGIJK":"EGBCJFIK",
 "BCEFGIJL":"EGBCJFLI",
-"BCEFGIK":"CGBDEFIK",
 "BCEFGIKL":"EGBCIFLK",
-"BCEFGIL":"CGBDEFLI",
-"BCEFGJK":"CGBDJFEK",
 "BCEFGJKL":"EGBCJFLK",
-"BCEFGJL":"CGBDJFLE",
-"BCEFGKL":"CGBDEFLK",
-"BCEFHIJ":"CJBDHFEI",
 "BCEFHIJK":"EJBCHFIK",
 "BCEFHIJL":"EJBCHFLI",
-"BCEFHIK":"CEBDHFIK",
 "BCEFHIKL":"EIBCHFLK",
-"BCEFHIL":"CEBDHFLI",
-"BCEFHJK":"CJBDHFEK",
 "BCEFHJKL":"EJBCHFLK",
-"BCEFHJL":"CJBDHFLE",
-"BCEFHKL":"CEBDHFLK",
-"BCEFIJK":"CJBDEFIK",
 "BCEFIJKL":"EJBCIFLK",
-"BCEFIJL":"CJBDEFLI",
-"BCEFIKL":"CEBDIFLK",
-"BCEFJKL":"CJBDEFLK",
-"BCEGHIJ":"HGBCJDEI",
 "BCEGHIJK":"EJBCHGIK",
 "BCEGHIJL":"EJBCHGLI",
-"BCEGHIK":"EGBCHDIK",
 "BCEGHIKL":"EGBCIHLK",
-"BCEGHIL":"EGBCHDLI",
-"BCEGHJK":"HGBCJDEK",
 "BCEGHJKL":"EJBCHGLK",
-"BCEGHJL":"HGBCJDLE",
-"BCEGHKL":"EGBCHDLK",
-"BCEGIJK":"EGBCJDIK",
 "BCEGIJKL":"EJBCIGLK",
-"BCEGIJL":"EGBCJDLI",
-"BCEGIKL":"EGBCIDLK",
-"BCEGJKL":"EGBCJDLK",
-"BCEHIJK":"EJBCHDIK",
 "BCEHIJKL":"EJBCIHLK",
-"BCEHIJL":"EJBCHDLI",
-"BCEHIKL":"EIBCHDLK",
-"BCEHJKL":"EJBCHDLK",
-"BCEIJKL":"EJBCIDLK",
-"BCFGHIJ":"HGBCJFDI",
 "BCFGHIJK":"HGBCJFIK",
 "BCFGHIJL":"HGBCJFLI",
-"BCFGHIK":"CGBDHFIK",
 "BCFGHIKL":"HGBCIFLK",
-"BCFGHIL":"CGBDHFLI",
-"BCFGHJK":"HGBCJFDK",
 "BCFGHJKL":"HGBCJFLK",
-"BCFGHJL":"CGBDHFLJ",
-"BCFGHKL":"CGBDHFLK",
-"BCFGIJK":"CGBDJFIK",
 "BCFGIJKL":"IGBCJFLK",
-"BCFGIJL":"CGBDJFLI",
-"BCFGIKL":"CGBDIFLK",
-"BCFGJKL":"CGBDJFLK",
-"BCFHIJK":"CJBDHFIK",
 "BCFHIJKL":"HJBCIFLK",
-"BCFHIJL":"CJBDHFLI",
-"BCFHIKL":"CIBDHFLK",
-"BCFHJKL":"CJBDHFLK",
-"BCFIJKL":"CJBDIFLK",
-"BCGHIJK":"HGBCJDIK",
 "BCGHIJKL":"HJBCIGLK",
-"BCGHIJL":"HGBCJDLI",
-"BCGHIKL":"HGBCIDLK",
-"BCGHJKL":"HGBCJDLK",
-"BCGIJKL":"IGBCJDLK",
-"BCHIJKL":"HJBCIDLK",
-"BEFGHIJ":"HGBDJFEI",
+"BDEFGHIJ":"EFBDHGIJ",
+"BDEFGHIK":"EFBDHGIK",
+"BDEFGHIL":"EFBDHGLI",
+"BDEFGHJK":"EFBDHGJK",
+"BDEFGHJL":"EFBDHGLJ",
+"BDEFGHKL":"EFBDHGLK",
+"BDEFGIJK":"EFBDIGJK",
+"BDEFGIJL":"EFBDIGLJ",
+"BDEFGIKL":"EFBDIGLK",
+"BDEFGJKL":"EFBDJGLK",
+"BDEFHIJK":"EFBDIHJK",
+"BDEFHIJL":"EFBDIHLJ",
+"BDEFHIKL":"EFBDIHLK",
+"BDEFHJKL":"EFBDJHLK",
+"BDEFIJKL":"EFIBJDLK",
+"BDEGHIJK":"EGBDIHJK",
+"BDEGHIJL":"EGBDIHLJ",
+"BDEGHIKL":"EGBDIHLK",
+"BDEGHJKL":"EGBDJHLK",
+"BDEGIJKL":"EGIBJDLK",
+"BDEHIJKL":"EIBDJHLK",
+"BDFGHIJK":"FGBDIHJK",
+"BDFGHIJL":"FGBDIHLJ",
+"BDFGHIKL":"FGBDIHLK",
+"BDFGHJKL":"FGBDJHLK",
+"BDFGIJKL":"FGIBJDLK",
+"BDFHIJKL":"FIBDJHLK",
+"BDGHIJKL":"HGIBJDLK",
 "BEFGHIJK":"EJBFHGIK",
 "BEFGHIJL":"EJBFHGLI",
-"BEFGHIK":"EGBDHFIK",
 "BEFGHIKL":"EGBFIHLK",
-"BEFGHIL":"EGBDHFLI",
-"BEFGHJK":"HGBDJFEK",
 "BEFGHJKL":"EJBFHGLK",
-"BEFGHJL":"HGBDJFLE",
-"BEFGHKL":"EGBDHFLK",
-"BEFGIJK":"EGBDJFIK",
 "BEFGIJKL":"EJBFIGLK",
-"BEFGIJL":"EGBDJFLI",
-"BEFGIKL":"EGBDIFLK",
-"BEFGJKL":"EGBDJFLK",
-"BEFHIJK":"EJBDHFIK",
 "BEFHIJKL":"EJBFIHLK",
-"BEFHIJL":"EJBDHFLI",
-"BEFHIKL":"EIBDHFLK",
-"BEFHJKL":"EJBDHFLK",
-"BEFIJKL":"EJBDIFLK",
-"BEGHIJK":"EJBDHGIK",
 "BEGHIJKL":"EJIBHGLK",
-"BEGHIJL":"EJBDHGLI",
-"BEGHIKL":"EGBDIHLK",
-"BEGHJKL":"EJBDHGLK",
-"BEGIJKL":"EJBDIGLK",
-"BEHIJKL":"EJBDIHLK",
-"BFGHIJK":"HGBDJFIK",
 "BFGHIJKL":"HJBFIGLK",
-"BFGHIJL":"HGBDJFLI",
-"BFGHIKL":"HGBDIFLK",
-"BFGHJKL":"HGBDJFLK",
-"BFGIJKL":"IGBDJFLK",
-"BFHIJKL":"HJBDIFLK",
-"BGHIJKL":"HJBDIGLK",
-"CEFGHIJ":"CGJDHFEI",
+"CDEFGHIJ":"CEFDHGIJ",
+"CDEFGHIK":"CEFDHGIK",
+"CDEFGHIL":"CEFDHGLI",
+"CDEFGHJK":"CEFDHGJK",
+"CDEFGHJL":"CEFDHGLJ",
+"CDEFGHKL":"CEFDHGLK",
+"CDEFGIJK":"CEFDIGJK",
+"CDEFGIJL":"CEFDIGLJ",
+"CDEFGIKL":"CEFDIGLK",
+"CDEFGJKL":"CEFDJGLK",
+"CDEFHIJK":"CEFDIHJK",
+"CDEFHIJL":"CEFDIHLJ",
+"CDEFHIKL":"CEFDIHLK",
+"CDEFHJKL":"CEFDJHLK",
+"CDEFIJKL":"CEIDJFLK",
+"CDEGHIJK":"CEIDHGJK",
+"CDEGHIJL":"CEIDHGLJ",
+"CDEGHIKL":"CEIDHGLK",
+"CDEGHJKL":"CEJDHGLK",
+"CDEGIJKL":"CEIDJGLK",
+"CDEHIJKL":"CEIDJHLK",
+"CDFGHIJK":"CFIDHGJK",
+"CDFGHIJL":"CFIDHGLJ",
+"CDFGHIKL":"CFIDHGLK",
+"CDFGHJKL":"CFJDHGLK",
+"CDFGIJKL":"CFIDJGLK",
+"CDFHIJKL":"CFIDJHLK",
+"CDGHIJKL":"CGIDJHLK",
 "CEFGHIJK":"EGJCHFIK",
 "CEFGHIJL":"EGJCHFLI",
-"CEFGHIK":"CGEDHFIK",
 "CEFGHIKL":"EGICHFLK",
-"CEFGHIL":"CGEDHFLI",
-"CEFGHJK":"CGJDHFEK",
 "CEFGHJKL":"EGJCHFLK",
-"CEFGHJL":"CGJDHFLE",
-"CEFGHKL":"CGEDHFLK",
-"CEFGIJK":"CGEDJFIK",
 "CEFGIJKL":"EGICJFLK",
-"CEFGIJL":"CGEDJFLI",
-"CEFGIKL":"CGEDIFLK",
-"CEFGJKL":"CGEDJFLK",
-"CEFHIJK":"CJEDHFIK",
 "CEFHIJKL":"EJICHFLK",
-"CEFHIJL":"CJEDHFLI",
-"CEFHIKL":"CEIDHFLK",
-"CEFHJKL":"CJEDHFLK",
-"CEFIJKL":"CJEDIFLK",
-"CEGHIJK":"EGJCHDIK",
 "CEGHIJKL":"EJICHGLK",
-"CEGHIJL":"EGJCHDLI",
-"CEGHIKL":"EGICHDLK",
-"CEGHJKL":"EGJCHDLK",
-"CEGIJKL":"EGICJDLK",
-"CEHIJKL":"EJICHDLK",
-"CFGHIJK":"CGJDHFIK",
 "CFGHIJKL":"HGICJFLK",
-"CFGHIJL":"CGJDHFLI",
-"CFGHIKL":"CGIDHFLK",
-"CFGHJKL":"CGJDHFLK",
-"CFGIJKL":"CGIDJFLK",
-"CFHIJKL":"CJIDHFLK",
-"CGHIJKL":"HGICJDLK",
-"EFGHIJK":"EGJDHFIK",
+"DEFGHIJK":"EFIDHGJK",
+"DEFGHIJL":"EFIDHGLJ",
+"DEFGHIKL":"EFIDHGLK",
+"DEFGHJKL":"EFJDHGLK",
+"DEFGIJKL":"EFIDJGLK",
+"DEFHIJKL":"EFIDJHLK",
+"DEGHIJKL":"EGIDJHLK",
+"DFGHIJKL":"FGIDJHLK",
 "EFGHIJKL":"EJIFHGLK",
-"EFGHIJL":"EGJDHFLI",
-"EFGHIKL":"EGIDHFLK",
-"EFGHJKL":"EGJDHFLK",
-"EFGIJKL":"EGIDJFLK",
-"EFHIJKL":"EJIDHFLK",
-"EGHIJKL":"EJIDHGLK",
-"FGHIJKL":"HGIDJFLK",
 };const GRP={
   A:[["Mexico","🇲🇽"],["Czechia","🇨🇿"],["South Africa","🇿🇦"],["Korea Republic","🇰🇷"]],
   B:[["Canada","🇨🇦"],["Bosnia","🇧🇦"],["Qatar","🇶🇦"],["Switzerland","🇨🇭"]],
@@ -1479,14 +1508,14 @@ function applyLockState(){
   var ni=document.getElementById('pname');
   if(ni) ni.disabled=locked;
 }
-window.onload=function(){buildGroups();buildThird();buildAdminUI();loadDraft();updateProg();initFirebase();applyLockState();};
+window.onload=function(){buildGroups();buildThird();buildAdminUI();loadDraft();updateProg();initFirebase();applyLockState();startRealtimeListener();};
 
 function goPage(id,btn){
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
   document.querySelectorAll('.nav button').forEach(function(b){b.classList.remove('on');});
   document.getElementById('pg-'+id).classList.add('on');
   btn.classList.add('on');
-  if(id==='lb') renderLB();
+  if(id==='lb'){ startRealtimeListener(); renderLB(); }
   if(id==='admin'){ startRealtimeListener(); startAutoScoring(); }
 }
 
@@ -1536,7 +1565,7 @@ function getByRank(g,rank){
 }
 
 // Groups eligible for 3rd place (D is excluded - Group D is always a fixed bracket slot)
-var T3_GROUPS=['A','B','C','E','F','G','H','I','J','K','L'];
+var T3_GROUPS=['A','B','C','D','E','F','G','H','I','J','K','L'];
 
 function buildThird(){
   var grid=document.getElementById('t3grid');
@@ -1567,8 +1596,6 @@ function onT3Change(){
     if(v) cnt[v]=(cnt[v]||0)+1;
     ST.t3[g]=v?parseInt(v):null;
   });
-  // Group D is never a 3rd place team
-  ST.t3['D']=null;
   var dupe=Object.values(cnt).some(function(c){return c>1;});
   var total=T3_GROUPS.filter(function(g){return ST.t3[g]!==null;}).length;
   T3_GROUPS.forEach(function(g){
@@ -1918,12 +1945,12 @@ function pickChamp(name){
 
 function autosave(){
   ST.name=(document.getElementById('pname')||{}).value||'';
-  try{localStorage.setItem('wc26macy',JSON.stringify(ST));}catch(e){}
+  try{localStorage.setItem('wc26v3',JSON.stringify(ST));}catch(e){}
 }
 
 function loadDraft(){
   try{
-    var raw=localStorage.getItem('wc26macy');if(!raw)return;
+    var raw=localStorage.getItem('wc26v3');if(!raw)return;
     var saved=JSON.parse(raw);if(!saved)return;
     Object.assign(ST,saved);
     if(!ST.gr) ST.gr={};if(!ST.t3) ST.t3={};
@@ -1966,14 +1993,14 @@ function submitToAdmin(){
   if(db){
     var btn=document.getElementById('submitBtn');
     if(btn){btn.textContent='Submitting...';btn.disabled=true;}
-    db.collection("wc2026_macy_submissions").doc(name).set(data)
+    db.collection("wc2026_amst_submissions").doc(name).set(data)
       .then(function(){
         if(btn){btn.textContent='Submit My Picks';btn.disabled=false;}
         var cd=document.getElementById('submitConfirm');
         var cm=document.getElementById('submitConfirmMsg');
         if(cd) cd.style.display='block';
-        if(cm) cm.textContent='Sent to Admin portal · Champion: '+champ+' · '+new Date().toLocaleTimeString();
-        toast('Picks sent directly to Admin portal!');
+        if(cm) cm.textContent='Sent to Rob portal · Champion: '+champ+' · '+new Date().toLocaleTimeString();
+        toast('Picks sent to Rob Admin portal!');
         autosave();
       })
       .catch(function(err){
@@ -1988,10 +2015,10 @@ function submitToAdmin(){
 
 function submitLocal(data,champ){
   var subs=[];
-  try{var raw=localStorage.getItem('wc26macy_subs');if(raw)subs=JSON.parse(raw);}catch(e){}
+  try{var raw=localStorage.getItem('wc26subs');if(raw)subs=JSON.parse(raw);}catch(e){}
   var idx=subs.findIndex(function(s){return s.name===data.name;});
   if(idx>=0){subs[idx]=data;}else{subs.push(data);}
-  try{localStorage.setItem('wc26macy_subs',JSON.stringify(subs));}catch(e){}
+  try{localStorage.setItem('wc26subs',JSON.stringify(subs));}catch(e){}
   SUBS=subs; renderSubs();
   var cd=document.getElementById('submitConfirm');
   var cm=document.getElementById('submitConfirmMsg');
@@ -2017,7 +2044,7 @@ function doExport(){
 
 function clearAll(){
   if(!confirm('Clear all your picks?')) return;
-  try{localStorage.removeItem('wc26macy');}catch(e){}
+  try{localStorage.removeItem('wc26v3');}catch(e){}
   location.reload();
 }
 
@@ -2202,18 +2229,18 @@ function processResults(fixtures, groupWinners, thirdPlaceGroups) {
   }
 
   SUBS.sort(function(a,b){ return b.score - a.score; });
-  try { localStorage.setItem('wc26macy_subs', JSON.stringify(SUBS)); } catch(e) {}
+  try { localStorage.setItem('wc26subs', JSON.stringify(SUBS)); } catch(e) {}
 
   // Write scores to Firebase
   if (db) {
     var batch = db.batch();
     SUBS.forEach(function(s){
-      batch.update(db.collection('wc2026_macy_submissions').doc(s.name), {score: s.score});
+      batch.update(db.collection('wc2026_amst_submissions').doc(s.name), {score: s.score});
     });
     batch.commit().catch(function(e){ console.warn('Score write:', e); });
 
     // Also store last results snapshot in Firebase
-    db.collection('wc2026_macy_submissions_meta').doc('lastResults').set({
+    db.collection('wc2026_amst_submissions_meta').doc('lastResults').set({
       groupWinners: groupWinners,
       thirdPlaceGroups: thirdPlaceGroups,
       r32w: r32w, r16w: r16w, qfw: qfw, sfw: sfw,
@@ -2248,159 +2275,413 @@ function updateAutoStatus(state, msg) {
 }
 
 // ── MANUAL SUBMISSION ENTRY ──
+// State for manual entry (separate from ST so it doesn't interfere)
+var ME = {
+  gr:{}, t3:{}, bkt:{r32:{},r16:{},qf:{},sf:{},third:null,champ:null}
+};
+GK.forEach(function(g){ ME.gr[g]={}; ME.t3[g]=null; });
+
 function buildManualEntryUI(){
-  // Group 1st + 2nd place dropdowns (two per group)
-  var gg=document.getElementById('meGroupsGrid');
-  if(gg){
-    gg.style.display='grid';
-    gg.style.gridTemplateColumns='repeat(auto-fill,minmax(300px,1fr))';
-    gg.style.gap='10px';
-    gg.style.marginBottom='12px';
-    GK.forEach(function(g){
-      var teams=GRP[g];
-      var opts1='<option value="">-- 1st place --</option>';
-      var opts2='<option value="">-- 2nd place --</option>';
-      teams.forEach(function(t){
-        opts1+='<option value="'+t[0]+'">'+t[1]+' '+t[0]+'</option>';
-        opts2+='<option value="'+t[0]+'">'+t[1]+' '+t[0]+'</option>';
-      });
-      var d=document.createElement('div');
-      d.className='resfield';
-      d.style.borderColor='var(--border)';
-      d.innerHTML='<label style="color:var(--gold);font-size:11px">Group '+g+'</label>'+
-        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px">'+
-        '<select id="meg1-'+g+'" style="border:1.5px solid var(--gold);border-radius:4px;padding:5px 6px;font-size:11px;background:#fffbe8;outline:none" title="1st place">'+opts1+'</select>'+
-        '<select id="meg2-'+g+'" style="border:1.5px solid var(--silver);border-radius:4px;padding:5px 6px;font-size:11px;background:#f8f8f8;outline:none" title="2nd place">'+opts2+'</select>'+
-        '</div>'+
-        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:2px">'+
-        '<div style="font-size:9px;text-align:center;color:var(--gold);font-family:Barlow Condensed,sans-serif;letter-spacing:1px">1ST PLACE</div>'+
-        '<div style="font-size:9px;text-align:center;color:var(--silver);font-family:Barlow Condensed,sans-serif;letter-spacing:1px">2ND PLACE</div>'+
-        '</div>';
-      gg.appendChild(d);
-    });
-  }
+  buildMEGroups();
+  buildMEThird();
+}
 
-  // 3rd place group letter inputs
-  var tg=document.getElementById('me3rdGrid');
-  if(tg){
-    for(var i=1;i<=8;i++){
-      var d=document.createElement('div');d.className='resfield';
-      d.innerHTML='<label>3rd Place #'+i+'</label><input type="text" id="me3rd-'+i+'" placeholder="Group letter A-L" maxlength="1" style="text-transform:uppercase">';
-      tg.appendChild(d);
+function buildMEGroups(){
+  var grid=document.getElementById('meGroupsGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+  GK.forEach(function(g,gi){
+    var teams=GRP[g];
+    var card=document.createElement('div');
+    card.className='gcard';card.id='me-gc-'+g;
+    card.style.animationDelay=(gi*0.04)+'s';
+    var rows='';
+    teams.forEach(function(t,ti){
+      rows+='<div class="trow">'+
+        '<div class="tflag">'+t[1]+'</div>'+
+        '<div class="tname">'+t[0]+'</div>'+
+        '<select class="rsel" id="me-rs-'+g+'-'+ti+'" onchange="onMEGrpRank(\'' +g+ '\')">' +
+        '<option value="">Rank</option>'+
+        '<option value="1">1st</option><option value="2">2nd</option>'+
+        '<option value="3">3rd</option><option value="4">4th</option>'+
+        '</select></div>';
+    });
+    card.innerHTML='<div class="ghead"><div class="ghead-l">Group '+g+'</div>'+
+      '<div class="ghead-r" id="me-gchk-'+g+'">★</div></div>'+
+      '<div class="gbody">'+rows+'</div>';
+    grid.appendChild(card);
+  });
+}
+
+function onMEGrpRank(g){
+  var teams=GRP[g];
+  var vals=[];
+  teams.forEach(function(t,i){var s=document.getElementById('me-rs-'+g+'-'+i);if(s&&s.value)vals.push(s.value);});
+  var dupe=vals.length!==new Set(vals).size;
+  ME.gr[g]={};
+  teams.forEach(function(t,i){
+    var s=document.getElementById('me-rs-'+g+'-'+i);if(!s)return;
+    var v=s.value;
+    s.className='rsel'+(v?' r'+v:'')+(dupe&&v?' bad':'');
+    if(v) ME.gr[g][t[0]]=parseInt(v);
+  });
+  var ok=vals.length===4&&!dupe;
+  var card=document.getElementById('me-gc-'+g);
+  if(card) card.classList.toggle('done',ok);
+  mERefreshT3Name(g);
+  mETryBracket();
+}
+
+function mEGetByRank(g,rank){
+  var teams=GRP[g];var r=ME.gr[g]||{};
+  for(var i=0;i<teams.length;i++){if(r[teams[i][0]]===rank)return teams[i];}
+  return null;
+}
+
+function buildMEThird(){
+  var grid=document.getElementById('me3rdGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+  T3_GROUPS.forEach(function(g){
+    var row=document.createElement('div');row.className='t3row';
+    row.innerHTML='<div class="t3g">'+g+'</div>'+
+      '<div class="t3name" id="me-t3n-'+g+'" style="color:var(--muted)">Rank group first</div>'+
+      '<select class="t3sel" id="me-t3s-'+g+'" onchange="onMET3Change()">'+
+      '<option value="">—</option>'+
+      [1,2,3,4,5,6,7,8].map(function(n){return '<option value="'+n+'">'+n+'</option>';}).join('')+
+      '</select>';
+    grid.appendChild(row);
+  });
+}
+
+function mERefreshT3Name(g){
+  if(T3_GROUPS.indexOf(g)<0) return;
+  var t=mEGetByRank(g,3);
+  var el=document.getElementById('me-t3n-'+g);if(!el)return;
+  if(t){el.textContent=t[1]+' '+t[0];el.style.color='var(--text)';}
+  else{el.textContent='Rank group first';el.style.color='var(--muted)';}
+}
+
+function onMET3Change(){
+  var cnt={};
+  T3_GROUPS.forEach(function(g){
+    var s=document.getElementById('me-t3s-'+g);var v=s?s.value:'';
+    if(v) cnt[v]=(cnt[v]||0)+1;
+    ME.t3[g]=v?parseInt(v):null;
+  });
+  var dupe=Object.values(cnt).some(function(c){return c>1;});
+  var total=T3_GROUPS.filter(function(g){return ME.t3[g]!==null;}).length;
+  T3_GROUPS.forEach(function(g){
+    var s=document.getElementById('me-t3s-'+g);if(!s)return;
+    var v=s.value;
+    s.classList.remove('ok','bad');
+    if(v&&dupe&&cnt[v]>1) s.classList.add('bad');
+    else if(v&&!dupe) s.classList.add('ok');
+  });
+  var msg=document.getElementById('meValmsg');
+  if(msg) msg.classList.toggle('show',total>0&&(total!==8||dupe));
+  mETryBracket();
+}
+
+// ── ME BRACKET ENGINE (mirrors main bracket but uses ME state) ──
+function mEGetPermKey(){
+  var sel=T3_GROUPS.filter(function(g){return ME.t3[g]!==null;});
+  if(sel.length!==8) return null;
+  return sel.sort().join('');
+}
+
+function mEGetPermMap(){
+  var key=mEGetPermKey();if(!key)return null;
+  var mup=FIFA_PERMS[key];if(!mup)return null;
+  var map={};
+  SLOTS.forEach(function(slot,i){map[slot]=mup[i];});
+  return map;
+}
+
+function mEResolveRef(ref){
+  var rank=parseInt(ref[0]);var g=ref[1];
+  var t=mEGetByRank(g,rank);
+  if(t)return{name:t[0],flag:t[1]};
+  return{name:ref,flag:'⚽'};
+}
+
+function mETryBracket(){
+  var pm=mEGetPermMap();
+  var note=document.getElementById('meBktNote');
+  var content=document.getElementById('meBktContent');
+  if(!pm){
+    if(note)note.style.display='block';
+    if(content)content.style.display='none';
+    return;
+  }
+  if(note)note.style.display='none';
+  if(content)content.style.display='block';
+  mEBuildR32(pm);
+  mEBuildR16();
+  mEBuildQF();
+  mEBuildSF();
+  mEBuildThirdPlace();
+  mEBuildFinal();
+}
+
+function mEBuildR32(pm){
+  var grid=document.getElementById('meR32Grid');
+  if(!grid)return;grid.innerHTML='';
+  var pM=SLOTS.map(function(slot){return{id:'r32p'+slot,lbl:'1'+slot+' vs 3'+pm[slot],a:'1'+slot,b:'3'+pm[slot]};});
+  var all=pM.concat(FIXED);
+  all.forEach(function(m){
+    var tA=mEResolveRef(m.a);var tB=mEResolveRef(m.b);var w=ME.bkt.r32[m.id]||null;
+    var div=document.createElement('div');div.className='mc';
+    div.innerHTML='<div class="mc-hdr">'+m.lbl+'</div>'+
+      '<div class="mc-team'+(w===tA.name?' win':'')+'"><span class="mc-flag">'+tA.flag+'</span>'+tA.name+'</div>'+
+      '<div class="mc-team'+(w===tB.name?' win':'')+'"><span class="mc-flag">'+tB.flag+'</span>'+tB.name+'</div>';
+    (function(mId,teamA,teamB){
+      var rows=div.querySelectorAll('.mc-team');
+      rows[0].onclick=function(){mEPickWinner('r32',mId,teamA.name);};
+      rows[1].onclick=function(){mEPickWinner('r32',mId,teamB.name);};
+    })(m.id,tA,tB);
+    grid.appendChild(div);
+  });
+}
+
+function mEBuildRound(contId,rndKey,count,prevWinners){
+  var cont=document.getElementById(contId);if(!cont)return;cont.innerHTML='';
+  for(var i=0;i<count;i++){
+    var pairs={r16:R16_PAIRS,qf:QF_PAIRS,sf:SF_PAIRS};
+    var pairList=pairs[rndKey];
+    if(!pairList||!pairList[i])continue;
+    var pair=pairList[i];
+    var prevRnd={r16:'r32',qf:'r16',sf:'qf'}[rndKey];
+    var tA=ME.bkt[prevRnd][pair.a]||null;
+    var tB=ME.bkt[prevRnd][pair.b]||null;
+    var w=ME.bkt[rndKey][pair.id]||null;
+    var tbd=!tA||!tB;
+    var div=document.createElement('div');div.className='rmc';
+    div.innerHTML=
+      '<div class="mc-team'+(tbd?' tbd':'')+(w===tA?' win':'')+'">'+
+        (tbd?'TBD':tA+(w===tA?' ✓':''))+'</div>'+
+      '<div class="mc-team'+(tbd?' tbd':'')+(w===tB?' win':'')+'">'+
+        (tbd?'TBD':tB+(w===tB?' ✓':''))+'</div>';
+    if(!tbd){
+      (function(pid,rk,ta,tb){
+        var rows=div.querySelectorAll('.mc-team');
+        rows[0].onclick=function(){mEPickWinner(rk,pid,ta);};
+        rows[1].onclick=function(){mEPickWinner(rk,pid,tb);};
+      })(pair.id,rndKey,tA,tB);
     }
-  }
-
-  // Knockout picks
-  var kg=document.getElementById('meKnockoutGrid');
-  if(kg){
-    var rounds=[
-      {id:'meR32',lbl:'R32 Winner (example pick)'},
-      {id:'meR16',lbl:'R16 Winner (example pick)'},
-      {id:'meQF', lbl:'QF Winner (example pick)'},
-      {id:'meSF', lbl:'SF Winner (example pick)'},
-    ];
-    rounds.forEach(function(r){
-      var d=document.createElement('div');d.className='resfield';
-      d.innerHTML='<label>'+r.lbl+'</label><input type="text" id="'+r.id+'" placeholder="Team name...">';
-      kg.appendChild(d);
-    });
+    cont.appendChild(div);
   }
 }
 
-function manualAddSub(){
-  var name=(document.getElementById('meName')||{}).value||'';
-  var champ=(document.getElementById('meChamp')||{}).value||'';
-  if(!name.trim()){showMeMsg('Enter a participant name','error');return;}
-  if(!champ.trim()){showMeMsg('Enter a champion pick','error');return;}
+function mEBuildR16(){ mEBuildRound('meR16Grid','r16',8,Object.values(ME.bkt.r32)); }
+function mEBuildQF(){  mEBuildRound('meQFGrid', 'qf', 4,Object.values(ME.bkt.r16)); }
+function mEBuildSF(){  mEBuildRound('meSFGrid', 'sf', 2,Object.values(ME.bkt.qf));  }
 
-  // Build gr object from 1st + 2nd place dropdowns
-  var gr={};
-  GK.forEach(function(g){
-    var sel1=document.getElementById('meg1-'+g);
-    var sel2=document.getElementById('meg2-'+g);
-    var first=sel1?sel1.value:'';
-    var second=sel2?sel2.value:'';
-    if(!first) return;
-    gr[g]={};
-    var teams=GRP[g];
-    var used={};
-    if(first)  { gr[g][first]=1;  used[first]=true; }
-    if(second && second!==first) { gr[g][second]=2; used[second]=true; }
-    var r=second?3:2;
-    teams.forEach(function(t){
-      if(!used[t[0]]){ gr[g][t[0]]=r; r++; }
-    });
-  });
-
-  // Build t3 object from 3rd place inputs
-  var t3={};
-  T3_GROUPS.forEach(function(g){ t3[g]=null; });
-  for(var i=1;i<=8;i++){
-    var el=document.getElementById('me3rd-'+i);
-    var v=el?el.value.trim().toUpperCase():'';
-    if(v&&T3_GROUPS.indexOf(v)>=0) t3[v]=i;
+function mEBuildThirdPlace(){
+  var cont=document.getElementById('me3rdGame');if(!cont)return;cont.innerHTML='';
+  var qfm1w=ME.bkt.qf['qfm1']||null;var qfm2w=ME.bkt.qf['qfm2']||null;
+  var qfm3w=ME.bkt.qf['qfm3']||null;var qfm4w=ME.bkt.qf['qfm4']||null;
+  var sfm1w=ME.bkt.sf['sfm1']||null;var sfm2w=ME.bkt.sf['sfm2']||null;
+  var loser1=null;var loser2=null;
+  if(sfm1w&&qfm1w&&qfm2w){loser1=(sfm1w===qfm1w)?qfm2w:qfm1w;}
+  if(sfm2w&&qfm3w&&qfm4w){loser2=(sfm2w===qfm3w)?qfm4w:qfm3w;}
+  var tpw=ME.bkt.third||null;var tbd=!loser1||!loser2;
+  var div=document.createElement('div');div.className='rmc';
+  div.style.borderColor='var(--bronze)';
+  div.innerHTML='<div class="mc-hdr" style="background:#7a4000;color:#fff">3RD PLACE MATCH</div>'+
+    '<div class="mc-team'+(tbd?' tbd':'')+(tpw===loser1?' win':'')+'">'+
+      (tbd?'TBD':loser1+(tpw===loser1?' 🥉':''))+'</div>'+
+    '<div class="mc-team'+(tbd?' tbd':'')+(tpw===loser2?' win':'')+'">'+
+      (tbd?'TBD':loser2+(tpw===loser2?' 🥉':''))+'</div>';
+  if(!tbd){
+    (function(l1,l2){
+      var rows=div.querySelectorAll('.mc-team');
+      rows[0].onclick=function(){mEPickThird(l1);};
+      rows[1].onclick=function(){mEPickThird(l2);};
+    })(loser1,loser2);
   }
+  cont.appendChild(div);
+}
 
-  // Build minimal bracket with champion
-  var bkt={r32:{},r16:{},qf:{},sf:{},third:null,champ:champ.trim()};
+function mEBuildFinal(){
+  var cont=document.getElementById('meFinalGrid');
+  var chDiv=document.getElementById('meChampShow');
+  if(!cont)return;cont.innerHTML='';
+  var tA=ME.bkt.sf['sfm1']||null;var tB=ME.bkt.sf['sfm2']||null;
+  var champ=ME.bkt.champ;var tbd=!tA||!tB;
+  var div=document.createElement('div');div.className='rmc final-card';
+  div.innerHTML='<div class="final-hdr">🏆 THE FINAL</div>'+
+    '<div class="mc-team'+(tbd?' tbd':'')+(champ===tA?' win':'')+'">'+
+      (tbd?'TBD':tA+(champ===tA?' 🏆':''))+'</div>'+
+    '<div class="mc-team'+(tbd?' tbd':'')+(champ===tB?' win':'')+'">'+
+      (tbd?'TBD':tB+(champ===tB?' 🏆':''))+'</div>';
+  if(!tbd){
+    (function(ta,tb){
+      var rows=div.querySelectorAll('.mc-team');
+      rows[0].onclick=function(){mEPickChamp(ta);};
+      rows[1].onclick=function(){mEPickChamp(tb);};
+    })(tA,tB);
+  }
+  cont.appendChild(div);
+  if(chDiv){
+    if(champ){chDiv.textContent='🏆 Champion: '+champ;chDiv.classList.add('show');}
+    else{chDiv.classList.remove('show');}
+  }
+}
 
-  var data={
-    v:3,
-    name:name.trim(),
-    gr:gr,
-    t3:t3,
-    bkt:bkt,
-    ts:new Date().toISOString(),
-    score:0,
-    manualEntry:true
-  };
+function mEPickWinner(rnd,mid,name){
+  if(!name)return;
+  ME.bkt[rnd][mid]=name;
+  mECascadeClear(rnd,mid);
+  mETryBracket();
+}
 
-  // Check for duplicate
+function mECascadeClear(rnd,mid){
+  if(rnd==='r32'){
+    R16_PAIRS.forEach(function(p){
+      if(p.a===mid||p.b===mid){var prev=ME.bkt.r16[p.id];delete ME.bkt.r16[p.id];if(prev)mECascadeClear('r16',p.id);}
+    });
+  }
+  if(rnd==='r16'){
+    QF_PAIRS.forEach(function(p){
+      if(p.a===mid||p.b===mid){var prev=ME.bkt.qf[p.id];delete ME.bkt.qf[p.id];if(prev)mECascadeClear('qf',p.id);}
+    });
+  }
+  if(rnd==='qf'){
+    SF_PAIRS.forEach(function(p){
+      if(p.a===mid||p.b===mid){delete ME.bkt.sf[p.id];ME.bkt.third=null;ME.bkt.champ=null;}
+    });
+  }
+  if(rnd==='sf'){ME.bkt.third=null;ME.bkt.champ=null;}
+}
+
+function mEPickThird(name){
+  if(!name)return;
+  ME.bkt.third=name;
+  mEBuildThirdPlace();
+}
+
+function mEPickChamp(name){
+  if(!name)return;
+  ME.bkt.champ=name;
+  mEBuildFinal();
+  toast('Champion set: '+name);
+}
+
+function manualSaveSub(){
+  var name=(document.getElementById('meName')||{}).value||'';
+  if(!name.trim()){showMeMsg('Enter participant name','error');return;}
+  // Sync the Champion text field into ME.bkt.champ (in case it wasn't set via bracket click)
+  var champField=(document.getElementById('meChamp')||{}).value||'';
+  if(champField.trim()) ME.bkt.champ=champField.trim();
+  if(!ME.bkt.champ){
+    if(!confirm('No champion selected yet. Save anyway?'))return;
+  }
+  var data={v:3,name:name.trim(),gr:ME.gr,t3:ME.t3,bkt:ME.bkt,
+            ts:new Date().toISOString(),score:0,manualEntry:true};
   var existing=SUBS.findIndex(function(s){return s.name.toLowerCase()===name.trim().toLowerCase();});
   var isUpdate=existing>=0;
   if(isUpdate){
-    if(!confirm(name+' already has a submission. Replace it?')) return;
+    if(!confirm(name+' already has a submission. Replace it?'))return;
     SUBS[existing]=data;
   } else {
     SUBS.push(data);
   }
-
-  // Save to Firebase if connected
   if(db){
-    db.collection('wc2026_macy_submissions').doc(data.name).set(data)
+    db.collection('wc2026_amst_submissions').doc(data.name).set(data)
       .then(function(){
         showMeMsg((isUpdate?'Updated':'Added')+' '+data.name+' successfully!','ok');
-        clearManualForm();
-        renderSubs();
+        clearManualForm();renderSubs();
       })
       .catch(function(e){
-        console.warn('Firebase save error:',e);
+        console.warn('Firebase save:',e);
         saveSubsLocal();
-        showMeMsg((isUpdate?'Updated':'Added')+' '+data.name+' (local only)','ok');
-        clearManualForm();
-        renderSubs();
+        showMeMsg((isUpdate?'Updated':'Added')+' '+data.name+' (local)','ok');
+        clearManualForm();renderSubs();
       });
   } else {
     saveSubsLocal();
-    showMeMsg((isUpdate?'Updated':'Added')+' '+data.name+' successfully!','ok');
-    clearManualForm();
-    renderSubs();
+    showMeMsg((isUpdate?'Updated':'Added')+' '+data.name,'ok');
+    clearManualForm();renderSubs();
   }
 }
 
-function saveSubsLocal(){
-  try{localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));}catch(e){}
+function clearManualForm(){
+  var ni=document.getElementById('meName');if(ni)ni.value='';
+  GK.forEach(function(g){
+    ME.gr[g]={};
+    [0,1,2,3].forEach(function(i){
+      var s=document.getElementById('me-rs-'+g+'-'+i);
+      if(s){s.value='';s.className='rsel';}
+    });
+    var card=document.getElementById('me-gc-'+g);
+    if(card)card.classList.remove('done');
+    mERefreshT3Name(g);
+  });
+  T3_GROUPS.forEach(function(g){
+    ME.t3[g]=null;
+    var s=document.getElementById('me-t3s-'+g);
+    if(s){s.value='';s.classList.remove('ok','bad');}
+  });
+  ME.bkt={r32:{},r16:{},qf:{},sf:{},third:null,champ:null};
+  var note=document.getElementById('meBktNote');
+  var content=document.getElementById('meBktContent');
+  if(note)note.style.display='block';
+  if(content)content.style.display='none';
+  var msg=document.getElementById('meMsg');if(msg)msg.style.display='none';
+  var vm=document.getElementById('meValmsg');if(vm)vm.classList.remove('show');
 }
 
-function clearManualForm(){
-  var fields=['meName','meChamp','meR32','meR16','meQF','meSF'];
-  fields.forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+function loadSubIntoForm(i){
+  var s=SUBS[i];if(!s)return;
+  var ni=document.getElementById('meName');if(ni)ni.value=s.name;
+  clearManualForm();
+  if(ni)ni.value=s.name;
+  // Restore group ranks
   GK.forEach(function(g){
-    var s1=document.getElementById('meg1-'+g);if(s1)s1.value='';
-    var s2=document.getElementById('meg2-'+g);if(s2)s2.value='';
+    if(!s.gr||!s.gr[g])return;
+    var teams=GRP[g];
+    teams.forEach(function(t,ti){
+      var rank=s.gr[g][t[0]];
+      var sel=document.getElementById('me-rs-'+g+'-'+ti);
+      if(sel&&rank){sel.value=rank;sel.className='rsel r'+rank;}
+    });
+    ME.gr[g]=s.gr[g];
+    var ok=teams.every(function(t,ti){return !!s.gr[g][t[0]];});
+    var card=document.getElementById('me-gc-'+g);
+    if(card&&ok)card.classList.add('done');
+    mERefreshT3Name(g);
   });
-  for(var i=1;i<=8;i++){var e=document.getElementById('me3rd-'+i);if(e)e.value='';}
-  var msg=document.getElementById('meMsg');if(msg)msg.style.display='none';
+  // Restore t3
+  T3_GROUPS.forEach(function(g){
+    var r=s.t3?s.t3[g]:null;
+    var sel=document.getElementById('me-t3s-'+g);
+    if(sel&&r){sel.value=r;sel.classList.add('ok');}
+    ME.t3[g]=r||null;
+  });
+  // Restore bracket
+  if(s.bkt){
+    ME.bkt={
+      r32:s.bkt.r32||{},r16:s.bkt.r16||{},
+      qf:s.bkt.qf||{},sf:s.bkt.sf||{},
+      third:s.bkt.third||null,champ:s.bkt.champ||null
+    };
+  }
+  mETryBracket();
+  var form=document.getElementById('meGroupsGrid');
+  if(form)form.scrollIntoView({behavior:'smooth',block:'start'});
+  showMeMsg('Loaded '+s.name+' — make changes and hit Save','ok');
+}
+
+function showMeMsg(msg,type){
+  var el=document.getElementById('meMsg');if(!el)return;
+  el.style.display='block';
+  el.style.color=type==='ok'?'var(--mex-green)':'var(--usa-red)';
+  el.textContent=type==='ok'?'✅ '+msg:'⚠ '+msg;
+}
+
+function saveSubsLocal(){
+  try{localStorage.setItem('wc26subs',JSON.stringify(SUBS));}catch(e){}
 }
 
 function showMeMsg(msg,type){
@@ -2443,14 +2724,14 @@ function saveRes(){
     for(var i=1;i<=8;i++){var e=document.getElementById('r3-'+i);if(e)r['t'+i]=e.value;}
     var t=document.getElementById('resthird');if(t)r['tp']=t.value;
     var c=document.getElementById('reschamp');if(c)r['ch']=c.value;
-    localStorage.setItem('wc26macy_res',JSON.stringify(r));
+    localStorage.setItem('wc26res',JSON.stringify(r));
     toast('Results saved');
   }catch(e){}
 }
 
 function loadAdmin(){
   try{
-    var raw=localStorage.getItem('wc26macy_res');
+    var raw=localStorage.getItem('wc26res');
     if(raw){
       var r=JSON.parse(raw);
       GK.forEach(function(g){var e=document.getElementById('rg-'+g);if(e&&r['g'+g])e.value=r['g'+g];});
@@ -2458,7 +2739,7 @@ function loadAdmin(){
       var t=document.getElementById('resthird');if(t&&r['tp'])t.value=r['tp'];
     var c=document.getElementById('reschamp');if(c&&r['ch'])c.value=r['ch'];
     }
-    var sr=localStorage.getItem('wc26macy_subs');
+    var sr=localStorage.getItem('wc26subs');
     if(sr) SUBS=JSON.parse(sr);
     renderSubs();
   }catch(e){}
@@ -2475,7 +2756,7 @@ function addSub(){
       SUBS=SUBS.filter(function(s){return s.name!==data.name;});
     }
     data.score=0;SUBS.push(data);
-    localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));
+    localStorage.setItem('wc26subs',JSON.stringify(SUBS));
     area.value='';renderSubs();
     toast('✅ '+data.name+' added!');
   }catch(e){toast('Invalid prediction code',true);}
@@ -2483,41 +2764,18 @@ function addSub(){
 
 function clearSubs(){
   if(!confirm('Remove all submissions?')) return;
-  SUBS=[];localStorage.removeItem('wc26macy_subs');renderSubs();
+  SUBS=[];localStorage.removeItem('wc26subs');renderSubs();
 }
 
-function loadSubIntoForm(i){
-  var s=SUBS[i];if(!s)return;
-  var ni=document.getElementById('meName');if(ni)ni.value=s.name;
-  var ci=document.getElementById('meChamp');if(ci)ci.value=s.bkt&&s.bkt.champ?s.bkt.champ:'';
-  // Load group 1st and 2nd place
-  GK.forEach(function(g){
-    var sel1=document.getElementById('meg1-'+g);
-    var sel2=document.getElementById('meg2-'+g);
-    if(!sel1||!sel2) return;
-    if(s.gr&&s.gr[g]){
-      var teams=GRP[g];
-      teams.forEach(function(t){
-        if(s.gr[g][t[0]]===1) sel1.value=t[0];
-        if(s.gr[g][t[0]]===2) sel2.value=t[0];
-      });
-    }
-  });
-  // Load 3rd place
-  var t3arr=[];
-  T3_GROUPS.forEach(function(g){if(s.t3&&s.t3[g]!==null&&s.t3[g]!==undefined)t3arr.push({g:g,r:s.t3[g]});});
-  t3arr.sort(function(a,b){return a.r-b.r;});
-  t3arr.forEach(function(item,idx){
-    var el=document.getElementById('me3rd-'+(idx+1));if(el)el.value=item.g;
-  });
-  // Scroll to form
-  var form=document.getElementById('meGroupsGrid');
-  if(form)form.scrollIntoView({behavior:'smooth',block:'center'});
-  showMeMsg('Loaded '+s.name+' — make changes and hit Save','ok');
-  toast('Editing '+s.name+' — scroll up to the form');
-}
 function removeSub(i){
-  SUBS.splice(i,1);localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));renderSubs();
+  var sname=SUBS[i]?SUBS[i].name:null;
+  SUBS.splice(i,1);
+  localStorage.setItem('wc26subs',JSON.stringify(SUBS));
+  if(db&&sname){
+    db.collection("wc2026_amst_submissions").doc(sname).delete()
+      .catch(function(e){console.warn("Delete error:",e);});
+  }
+  renderSubs();
 }
 
 function renderSubs(){
@@ -2626,9 +2884,16 @@ function calcScores(){
     var el=document.getElementById('sc-'+si);if(el)el.innerHTML='<strong>'+score+'</strong>';
   });
   SUBS.sort(function(a,b){return b.score-a.score;});
-  localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));
+  localStorage.setItem('wc26subs',JSON.stringify(SUBS));
+  if(db){
+    var batch=db.batch();
+    SUBS.forEach(function(s){
+      batch.update(db.collection("wc2026_amst_submissions").doc(s.name),{score:s.score});
+    });
+    batch.commit().catch(function(e){console.warn("Score sync:",e);});
+  }
   renderSubs();renderLB();
-  toast('✅ Scores calculated! Check the Leaderboard.');
+  toast('Scores calculated! Check the Leaderboard.');
 }
 
 function renderLB(){
@@ -2683,7 +2948,7 @@ function adminLogin(btn) {
 function checkAdminPw() {
   var inp = document.getElementById('adminPwInput');
   var val = inp ? inp.value : '';
-  if (val === 'Macychallenge') {
+  if (val === 'Robschallenge') {
     _adminUnlocked = true;
     closeAdminModal();
     if (_adminBtn) goPage('admin', _adminBtn);
