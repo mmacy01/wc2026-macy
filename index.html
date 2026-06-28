@@ -2921,11 +2921,10 @@ function calcScores(){
   SUBS.sort(function(a,b){return b.score-a.score;});
   localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));
   if(db){
-    var batch=db.batch();
     SUBS.forEach(function(s){
-      batch.update(db.collection("wc2026_macy_submissions").doc(s.name),{score:s.score});
+      db.collection("wc2026_macy_submissions").doc(s.name).set({score:s.score},{merge:true})
+        .catch(function(e){console.warn("Score sync failed for "+s.name+":",e);});
     });
-    batch.commit().catch(function(e){console.warn("Score sync:",e);});
   }
   renderSubs();renderLB();
   toast('✅ Scores calculated! Check the Leaderboard.');
