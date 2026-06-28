@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA World Cup 2026 – AmSty Predictor Challenge</title>
+<title>FIFA World Cup 2026 – Macy Predictor Challenge</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -532,7 +532,7 @@ hr.dv{border:none;border-top:2px solid var(--border);margin:20px 0}
     <div class="we-are">We Are 26</div>
     <div class="hero-h1">FIFA <em>World</em><br>Cup 2026</div>
     <div class="hero-h2">Predictor Challenge</div>
-    <div class="amst-tag">AmSty Predictor Challenge</div>
+    <div class="amst-tag">Macy Predictor Challenge</div>
     <div class="hero-meta">
       <span>June 11–July 19</span>
       <span>48 Teams</span>
@@ -716,7 +716,7 @@ hr.dv{border:none;border-top:2px solid var(--border);margin:20px 0}
 
 <!-- ADMIN -->
 <div id="pg-admin" class="pg">
-  <div class="awarn">🔒 <strong>Admin Only</strong> — Enter password: <strong>Robschallenge</strong>. Submissions populate in real time. Scores update automatically every 30 min via live API.</div>
+  <div class="awarn">🔒 <strong>Admin Only</strong> — Enter password: <strong>Macychallenge</strong>. Submissions populate in real time. Scores update automatically every 30 min via live API.</div>
   <div style="display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:7px;padding:10px 14px;margin-bottom:8px;font-family:Barlow Condensed,sans-serif;font-size:12px;letter-spacing:1px">
     <span id="fbDot" style="width:10px;height:10px;border-radius:50%;background:#ccc;flex-shrink:0"></span>
     <span id="fbMsg" style="color:var(--muted)">Checking Firebase...</span>
@@ -891,17 +891,17 @@ hr.dv{border:none;border-top:2px solid var(--border);margin:20px 0}
 
 <script>
 // =====================================================
-// FIREBASE — replace the values below with YOUR project config
-// Get them from: console.firebase.google.com
-//   Project Settings → Your apps → Web app → Config snippet
+// FIREBASE CONFIG — Macy Predictor Challenge
+// Replace with YOUR Macy Firebase project config
+// console.firebase.google.com → Project Settings → Your apps
 // =====================================================
 var FIREBASE_CONFIG = {
-  apiKey:            "AIzaSyBmmox3_xbbqqQ2LVK0RARTY7li56mQ-sA",
-  authDomain:        "wc2026-amsty.firebaseapp.com",
-  projectId:         "wc2026-amsty",
-  storageBucket:     "wc2026-amsty.firebasestorage.app",
-  messagingSenderId: "142752290798",
-  appId:             "1:142752290798:web:f4633b376715d2382b20ff"
+  apiKey:            "AIzaSyDdOuBoIALjlRXigqIlkEhNX9fHQbxlNiw",
+  authDomain:        "wc2026-macy.firebaseapp.com",
+  projectId:         "wc2026-macy",
+  storageBucket:     "wc2026-macy.firebasestorage.app",
+  messagingSenderId: "310987545397",
+  appId:             "1:310987545397:web:d33075aab90a6cf1578a7c"
 };
 var db = null;
 var subsListener = null;
@@ -946,12 +946,12 @@ function startRealtimeListener() {
     return;
   }
   if(subsListener) { subsListener(); subsListener=null; }
-  subsListener = db.collection("wc2026_amst_submissions")
+  subsListener = db.collection("wc2026_macy_submissions")
     .onSnapshot(function(snapshot){
       SUBS=[];
       snapshot.forEach(function(doc){ SUBS.push(doc.data()); });
       SUBS.sort(function(a,b){return (b.score||0)-(a.score||0);});
-      try{ localStorage.setItem('wc26subs',JSON.stringify(SUBS)); }catch(e){}
+      try{ localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS)); }catch(e){}
       renderSubs();
       renderLB();
     }, function(err){ console.warn("Listener error:",err); });
@@ -1945,12 +1945,12 @@ function pickChamp(name){
 
 function autosave(){
   ST.name=(document.getElementById('pname')||{}).value||'';
-  try{localStorage.setItem('wc26v3',JSON.stringify(ST));}catch(e){}
+  try{localStorage.setItem('wc26macy',JSON.stringify(ST));}catch(e){}
 }
 
 function loadDraft(){
   try{
-    var raw=localStorage.getItem('wc26v3');if(!raw)return;
+    var raw=localStorage.getItem('wc26macy');if(!raw)return;
     var saved=JSON.parse(raw);if(!saved)return;
     Object.assign(ST,saved);
     if(!ST.gr) ST.gr={};if(!ST.t3) ST.t3={};
@@ -1993,14 +1993,14 @@ function submitToAdmin(){
   if(db){
     var btn=document.getElementById('submitBtn');
     if(btn){btn.textContent='Submitting...';btn.disabled=true;}
-    db.collection("wc2026_amst_submissions").doc(name).set(data)
+    db.collection("wc2026_macy_submissions").doc(name).set(data)
       .then(function(){
         if(btn){btn.textContent='Submit My Picks';btn.disabled=false;}
         var cd=document.getElementById('submitConfirm');
         var cm=document.getElementById('submitConfirmMsg');
         if(cd) cd.style.display='block';
-        if(cm) cm.textContent='Sent to Rob portal · Champion: '+champ+' · '+new Date().toLocaleTimeString();
-        toast('Picks sent to Rob Admin portal!');
+        if(cm) cm.textContent='Sent to Admin portal · Champion: '+champ+' · '+new Date().toLocaleTimeString();
+        toast('Picks sent directly to Admin portal!');
         autosave();
       })
       .catch(function(err){
@@ -2015,10 +2015,10 @@ function submitToAdmin(){
 
 function submitLocal(data,champ){
   var subs=[];
-  try{var raw=localStorage.getItem('wc26subs');if(raw)subs=JSON.parse(raw);}catch(e){}
+  try{var raw=localStorage.getItem('wc26macy_subs');if(raw)subs=JSON.parse(raw);}catch(e){}
   var idx=subs.findIndex(function(s){return s.name===data.name;});
   if(idx>=0){subs[idx]=data;}else{subs.push(data);}
-  try{localStorage.setItem('wc26subs',JSON.stringify(subs));}catch(e){}
+  try{localStorage.setItem('wc26macy_subs',JSON.stringify(subs));}catch(e){}
   SUBS=subs; renderSubs();
   var cd=document.getElementById('submitConfirm');
   var cm=document.getElementById('submitConfirmMsg');
@@ -2044,7 +2044,7 @@ function doExport(){
 
 function clearAll(){
   if(!confirm('Clear all your picks?')) return;
-  try{localStorage.removeItem('wc26v3');}catch(e){}
+  try{localStorage.removeItem('wc26macy');}catch(e){}
   location.reload();
 }
 
@@ -2229,18 +2229,18 @@ function processResults(fixtures, groupWinners, thirdPlaceGroups) {
   }
 
   SUBS.sort(function(a,b){ return b.score - a.score; });
-  try { localStorage.setItem('wc26subs', JSON.stringify(SUBS)); } catch(e) {}
+  try { localStorage.setItem('wc26macy_subs', JSON.stringify(SUBS)); } catch(e) {}
 
   // Write scores to Firebase
   if (db) {
     var batch = db.batch();
     SUBS.forEach(function(s){
-      batch.update(db.collection('wc2026_amst_submissions').doc(s.name), {score: s.score});
+      batch.update(db.collection('wc2026_macy_submissions').doc(s.name), {score: s.score});
     });
     batch.commit().catch(function(e){ console.warn('Score write:', e); });
 
     // Also store last results snapshot in Firebase
-    db.collection('wc2026_amst_submissions_meta').doc('lastResults').set({
+    db.collection('wc2026_macy_submissions_meta').doc('lastResults').set({
       groupWinners: groupWinners,
       thirdPlaceGroups: thirdPlaceGroups,
       r32w: r32w, r16w: r16w, qfw: qfw, sfw: sfw,
@@ -2577,10 +2577,12 @@ function manualSaveSub(){
   if(!ME.bkt.champ){
     if(!confirm('No champion selected yet. Save anyway?'))return;
   }
-  var data={v:3,name:name.trim(),gr:ME.gr,t3:ME.t3,bkt:ME.bkt,
-            ts:new Date().toISOString(),score:0,manualEntry:true};
   var existing=SUBS.findIndex(function(s){return s.name.toLowerCase()===name.trim().toLowerCase();});
   var isUpdate=existing>=0;
+  // Preserve any score that's already been calculated for this player
+  var preservedScore=isUpdate&&SUBS[existing]&&SUBS[existing].score?SUBS[existing].score:0;
+  var data={v:3,name:name.trim(),gr:ME.gr,t3:ME.t3,bkt:ME.bkt,
+            ts:new Date().toISOString(),score:preservedScore,manualEntry:true};
   if(isUpdate){
     if(!confirm(name+' already has a submission. Replace it?'))return;
     SUBS[existing]=data;
@@ -2588,7 +2590,7 @@ function manualSaveSub(){
     SUBS.push(data);
   }
   if(db){
-    db.collection('wc2026_amst_submissions').doc(data.name).set(data)
+    db.collection('wc2026_macy_submissions').doc(data.name).set(data)
       .then(function(){
         showMeMsg((isUpdate?'Updated':'Added')+' '+data.name+' successfully!','ok');
         clearManualForm();renderSubs();
@@ -2681,7 +2683,7 @@ function showMeMsg(msg,type){
 }
 
 function saveSubsLocal(){
-  try{localStorage.setItem('wc26subs',JSON.stringify(SUBS));}catch(e){}
+  try{localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));}catch(e){}
 }
 
 function showMeMsg(msg,type){
@@ -2702,7 +2704,11 @@ function buildAdminUI(){
   var tg=document.getElementById('resg3rd');
   if(tg) for(var i=1;i<=8;i++){
     var d=document.createElement('div');d.className='resfield';
-    d.innerHTML='<label>3rd Place #'+i+' (group letter)</label><input type="text" id="r3-'+i+'" placeholder="A–L" maxlength="1">';
+    d.innerHTML='<label>3rd Place #'+i+' — Group Letter + Team</label>'+
+      '<div style="display:flex;gap:6px">'+
+      '<input type="text" id="r3-'+i+'" placeholder="A-L" maxlength="1" style="width:50px;flex-shrink:0">'+
+      '<input type="text" id="r3team-'+i+'" placeholder="Team that actually finished 3rd" style="flex:1">'+
+      '</div>';
     tg.appendChild(d);
   }
   var r32g=document.getElementById('resr32');
@@ -2721,26 +2727,34 @@ function saveRes(){
   try{
     var r={};
     GK.forEach(function(g){var e=document.getElementById('rg-'+g);if(e)r['g'+g]=e.value;});
-    for(var i=1;i<=8;i++){var e=document.getElementById('r3-'+i);if(e)r['t'+i]=e.value;}
+    for(var i=1;i<=8;i++){
+      var e=document.getElementById('r3-'+i);if(e)r['t'+i]=e.value;
+      var et=document.getElementById('r3team-'+i);if(et)r['tt'+i]=et.value;
+    }
     var t=document.getElementById('resthird');if(t)r['tp']=t.value;
     var c=document.getElementById('reschamp');if(c)r['ch']=c.value;
-    localStorage.setItem('wc26res',JSON.stringify(r));
+    localStorage.setItem('wc26macy_res',JSON.stringify(r));
     toast('Results saved');
   }catch(e){}
 }
 
 function loadAdmin(){
   try{
-    var raw=localStorage.getItem('wc26res');
+    var raw=localStorage.getItem('wc26macy_res');
     if(raw){
       var r=JSON.parse(raw);
       GK.forEach(function(g){var e=document.getElementById('rg-'+g);if(e&&r['g'+g])e.value=r['g'+g];});
-      for(var i=1;i<=8;i++){var e=document.getElementById('r3-'+i);if(e&&r['t'+i])e.value=r['t'+i];}
+      for(var i=1;i<=8;i++){
+        var e=document.getElementById('r3-'+i);if(e&&r['t'+i])e.value=r['t'+i];
+        var et=document.getElementById('r3team-'+i);if(et&&r['tt'+i])et.value=r['tt'+i];
+      }
       var t=document.getElementById('resthird');if(t&&r['tp'])t.value=r['tp'];
     var c=document.getElementById('reschamp');if(c&&r['ch'])c.value=r['ch'];
     }
-    var sr=localStorage.getItem('wc26subs');
-    if(sr) SUBS=JSON.parse(sr);
+    if(!db){
+      var sr=localStorage.getItem('wc26macy_subs');
+      if(sr) SUBS=JSON.parse(sr);
+    }
     renderSubs();
   }catch(e){}
 }
@@ -2756,7 +2770,7 @@ function addSub(){
       SUBS=SUBS.filter(function(s){return s.name!==data.name;});
     }
     data.score=0;SUBS.push(data);
-    localStorage.setItem('wc26subs',JSON.stringify(SUBS));
+    localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));
     area.value='';renderSubs();
     toast('✅ '+data.name+' added!');
   }catch(e){toast('Invalid prediction code',true);}
@@ -2764,18 +2778,11 @@ function addSub(){
 
 function clearSubs(){
   if(!confirm('Remove all submissions?')) return;
-  SUBS=[];localStorage.removeItem('wc26subs');renderSubs();
+  SUBS=[];localStorage.removeItem('wc26macy_subs');renderSubs();
 }
 
 function removeSub(i){
-  var sname=SUBS[i]?SUBS[i].name:null;
-  SUBS.splice(i,1);
-  localStorage.setItem('wc26subs',JSON.stringify(SUBS));
-  if(db&&sname){
-    db.collection("wc2026_amst_submissions").doc(sname).delete()
-      .catch(function(e){console.warn("Delete error:",e);});
-  }
-  renderSubs();
+  SUBS.splice(i,1);localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));renderSubs();
 }
 
 function renderSubs(){
@@ -2845,7 +2852,16 @@ function calcScores(){
   var aGW={};
   GK.forEach(function(g){var e=document.getElementById('rg-'+g);if(e&&e.value.trim())aGW[g]=e.value.trim().toLowerCase();});
   var a3rd=new Set();
-  for(var i=1;i<=8;i++){var e=document.getElementById('r3-'+i);if(e&&e.value.trim())a3rd.add(e.value.trim().toUpperCase());}
+  var a3rdTeamByGroup={}; // map group letter -> actual 3rd place team name (lowercased)
+  for(var i=1;i<=8;i++){
+    var e=document.getElementById('r3-'+i);
+    var et=document.getElementById('r3team-'+i);
+    if(e&&e.value.trim()){
+      var gLetter=e.value.trim().toUpperCase();
+      a3rd.add(gLetter);
+      if(et&&et.value.trim()) a3rdTeamByGroup[gLetter]=et.value.trim().toLowerCase();
+    }
+  }
   var ach=(document.getElementById('reschamp')||{}).value||'';ach=ach.trim().toLowerCase();
   // Actual knockout results per round (admin enters actual team names)
   var actualR32=[],actualR16=[],actualQF=[],actualSF=[];
@@ -2864,7 +2880,19 @@ function calcScores(){
       if(pred===actual) score+=1;
     });
     // 3rd place qualifiers: 2pts each
-    GK.forEach(function(g){if(s.t3&&s.t3[g]!==null&&s.t3[g]!==undefined&&a3rd.has(g))score+=2;});
+    // Award points only if the group is a correct top-8 qualifier AND
+    // (when an actual team name was entered) the player's own 3rd-ranked
+    // team in that group matches the team that actually finished 3rd.
+    GK.forEach(function(g){
+      if(!(s.t3&&s.t3[g]!==null&&s.t3[g]!==undefined&&a3rd.has(g))) return;
+      var requiredTeam=a3rdTeamByGroup[g];
+      if(requiredTeam){
+        var teams=GRP[g];var playerPick=null;
+        if(s.gr&&s.gr[g]) teams.forEach(function(t){if(s.gr[g][t[0]]===3)playerPick=t[0].toLowerCase();});
+        if(playerPick!==requiredTeam) return; // wrong team predicted for 3rd in this group
+      }
+      score+=2;
+    });
     // R32 winners: 3pts each
     if(s.bkt&&s.bkt.r32) Object.values(s.bkt.r32).forEach(function(team){if(actualR32.indexOf(team.toLowerCase())>=0)score+=3;});
     // R16 winners: 5pts each
@@ -2884,16 +2912,9 @@ function calcScores(){
     var el=document.getElementById('sc-'+si);if(el)el.innerHTML='<strong>'+score+'</strong>';
   });
   SUBS.sort(function(a,b){return b.score-a.score;});
-  localStorage.setItem('wc26subs',JSON.stringify(SUBS));
-  if(db){
-    var batch=db.batch();
-    SUBS.forEach(function(s){
-      batch.update(db.collection("wc2026_amst_submissions").doc(s.name),{score:s.score});
-    });
-    batch.commit().catch(function(e){console.warn("Score sync:",e);});
-  }
+  localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));
   renderSubs();renderLB();
-  toast('Scores calculated! Check the Leaderboard.');
+  toast('✅ Scores calculated! Check the Leaderboard.');
 }
 
 function renderLB(){
@@ -2948,7 +2969,7 @@ function adminLogin(btn) {
 function checkAdminPw() {
   var inp = document.getElementById('adminPwInput');
   var val = inp ? inp.value : '';
-  if (val === 'Robschallenge') {
+  if (val === 'Macychallenge') {
     _adminUnlocked = true;
     closeAdminModal();
     if (_adminBtn) goPage('admin', _adminBtn);
