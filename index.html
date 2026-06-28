@@ -2782,7 +2782,14 @@ function clearSubs(){
 }
 
 function removeSub(i){
-  SUBS.splice(i,1);localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));renderSubs();
+  var sname=SUBS[i]?SUBS[i].name:null;
+  SUBS.splice(i,1);
+  localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));
+  if(db&&sname){
+    db.collection("wc2026_macy_submissions").doc(sname).delete()
+      .catch(function(e){console.warn("Delete error:",e);});
+  }
+  renderSubs();
 }
 
 function renderSubs(){
@@ -2913,6 +2920,13 @@ function calcScores(){
   });
   SUBS.sort(function(a,b){return b.score-a.score;});
   localStorage.setItem('wc26macy_subs',JSON.stringify(SUBS));
+  if(db){
+    var batch=db.batch();
+    SUBS.forEach(function(s){
+      batch.update(db.collection("wc2026_macy_submissions").doc(s.name),{score:s.score});
+    });
+    batch.commit().catch(function(e){console.warn("Score sync:",e);});
+  }
   renderSubs();renderLB();
   toast('✅ Scores calculated! Check the Leaderboard.');
 }
